@@ -1,0 +1,109 @@
+<div class="row animate fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class=" alert alert-info text-center" role="alert">
+            <h4 class="alert-heading">Cargando</h4>
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div>
+
+<div class="paquete-container" *ngIf="!cargando">
+    <h2>{{paquete.nombre}}</h2>
+    <hr>
+    <div class="row">
+        <div class="col-md-5 col-sm-12">
+            <div id="carousel" class="mb-3">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div [ngClass]="{active:isFirst}" class="carousel-item" *ngFor="let galeria of galerias; first as isFirst">
+                            <img class="d-block w-100" [src]="galeria.imagen" alt="Second slide">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-12">
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h5 class="card-title">DESCRIPCION</h5>
+                    <p class="card-text text-justify">{{paquete.descripcion}}</p> <br>
+                    <h5><i class="fas fa-building"></i> {{paquete.empresa.nombre}}</h5>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <b><i class="fas fa-shopping-cart"></i> Precios:</b>
+                            <span class="badge badge-secondary m-2"><i class="fas fa-child"></i> Niño: ${{paquete.precio_adulto}}</span>
+                            <span class="badge badge-secondary m-2"><i class="fas fa-male"></i> Adulto: ${{paquete.precio_nino}}</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <b><i class="fas fa-map-marked-alt"></i> Lugar:</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 mb-4">
+        <p class="text-center">
+            <a class="btn btn-info m-1" data-toggle="collapse" href="#caracteristicasPaquete" role="button" aria-expanded="false" aria-controls="caracteristicasPaquete"><i class="fas fa-stream"></i> Caracteristicas</a>
+            <button class="btn btn-info m-1" type="button" data-toggle="collapse" data-target="#informacionPaquete" aria-expanded="false" aria-controls="informacionPaquete"><i class="fas fa-info"></i> Informacion adicional</button>
+        </p>
+        <div class="row">
+            <div class="col-md-6 col-sm-12 mb-3">
+                <div class="collapse multi-collapse" id="caracteristicasPaquete">
+                    <div class="card card-body">
+                        <b>Caracteristicas:</b>
+                        <ul>
+                            <li *ngFor="let caracteristica of paquete.caracteristicas">{{caracteristica.descripcion}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="collapse multi-collapse" id="informacionPaquete">
+                    <div class="card card-body">
+                        <b>Informacion adicional:</b>
+                        <ul>
+                            <li *ngFor="let informacion of paquete.informacion.detail">{{informacion}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="venta text-center">
+        <b id="title-compra">COMPRAR</b>
+        <form>
+            <div class="form-row align-items-center justify-content-center">
+                <div class="col-auto">
+                    <label class="sr-only" for="inlineAdulto">Adultos</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-male"></i></div>
+                        </div>
+                        <input type="number" class="form-control" id="inlineAdulto" placeholder="Adultos">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <label class="sr-only" for="inlineNino">Niños</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-child"></i></div>
+                        </div>
+                        <input type="number" class="form-control" id="inlineNino" placeholder="Niños">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
