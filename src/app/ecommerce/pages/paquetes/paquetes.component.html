@@ -1,63 +1,54 @@
 <div class="text-center mb-5">
     <h2 class="titulo-paquetes">PAQUETES DE VIAJES TURISTICOS</h2>
 </div>
+<div class="row" *ngIf="cargando">
+    <div class="col-12">
+        <div class=" alert alert-info text-center" role="alert">
+            <h4 class="alert-heading">Cargando</h4>
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4" *ngIf="paquetes.length === 0 && !cargando">
+    <div class="col-12">
+        <div class="alert alert-warning text-center" role="alert">
+            <h4 class="alert-heading">No se encontraron resultados</h4>
+            <i class="fas fa-exclamation-circle fa-2x"></i>
+        </div>
+    </div>
+</div>
 <!-- cards de paquetes -->
-<div class="row">
+<div class="row" *ngIf="!cargando && paquetes.length !== 0">
     <div class="col-lg-2 col-md-2 col-sm-12">
-        <div class="mb-4">
-            <b>FILTROS</b> <br><br>
-            <b>Empresas</b>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                <label class="form-check-label" for="exampleRadios1">
-              Default radio
-            </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                <label class="form-check-label" for="exampleRadios2">
-              Second default radio
-            </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
-                <label class="form-check-label" for="exampleRadios3">
-              Disabled radio
-            </label>
-            </div>
-            <b>Precio</b>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                <label class="form-check-label" for="exampleRadios1">
-              Default radio
-            </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                <label class="form-check-label" for="exampleRadios2">
-              Second default radio
-            </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
-                <label class="form-check-label" for="exampleRadios3">
-              Disabled radio
-            </label>
+        <b><i class="fas fa-filter"></i> FILTRO</b>
+        <div class="mt-2" [ngClass]="{'d-none':!empresaFiltro}">
+            <span class="badge badge-primary">{{empresaFiltro}} <i (click)="removeFiltroEmpresa()" class="fas fa-times-circle" style="cursor: pointer;"></i></span>
+        </div>
+        <div class="row mb-4 mt-3">
+            <div class="col-md-12 col-sm-6">
+                <b><i class="fas fa-building"></i> Empresas</b>
+                <div *ngFor="let empresa of empresas">
+                    <span class="badge badge-info" style="cursor: pointer;" (click)="filtroEmpresa(empresa.id,empresa.nombre)">{{empresa.nombre}}</span>
+                </div>
             </div>
         </div>
     </div>
     <div class="col-lg-10 col-md-10 col-sm-12">
         <div class="row">
-            <div *ngFor="let paquete of paquetes" class="col-lg-4 col-md-6 col-sm-6 mb-3">
+            <div *ngFor="let paquete of paquetes" data-aos="fade-up" class="col-lg-4 col-md-6 col-sm-6 mb-4">
                 <div class="card h-100">
                     <img class="card-img-top" [src]="paquete.portada" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title">{{ paquete.nombre }}</h5>
+                        <h3 class="card-title">{{ paquete.nombre }}</h3>
                         <p><i class="fas fa-building"></i>&nbsp; <b>Empresa:</b> {{ paquete.empresa.nombre }}</p>
                         <p>
                             <i class="fas fa-shopping-cart"></i>&nbsp; <b>Precios:</b>
-                            <span class="badge badge-secondary m-2"><i class="fas fa-child"></i> Niño: ${{paquete.precio_nino}}</span>
-                            <span class="badge badge-secondary m-2"><i class="fas fa-male"></i> Adulto: ${{paquete.precio_adulto}}</span>
+                            <span class="badge badge-success m-2"><i class="fas fa-child"></i> Niño: ${{paquete.precio_nino}}</span>
+                            <span class="badge badge-success m-2"><i class="fas fa-male"></i> Adulto: ${{paquete.precio_adulto}}</span>
                         </p>
                     </div>
                     <div class="card-footer">

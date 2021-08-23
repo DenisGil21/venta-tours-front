@@ -8,11 +8,12 @@ import { PaqueteComponent } from './pages/paquete/paquete.component';
 import { PaquetesComponent } from './pages/paquetes/paquetes.component';
 import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { BusquedaComponent } from './pages/busqueda/busqueda.component';
 
 
 
 @NgModule({
-  declarations: [HomeComponent, PaqueteComponent, PaquetesComponent, AboutComponent, ContactComponent],
+  declarations: [HomeComponent, PaqueteComponent, PaquetesComponent, AboutComponent, ContactComponent, BusquedaComponent],
   imports: [
     CommonModule,
     EcommerceRoutingModule,

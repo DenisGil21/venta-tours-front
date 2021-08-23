@@ -6,6 +6,7 @@ import { PaquetesComponent } from './pages/paquetes/paquetes.component';
 import { PaqueteComponent } from './pages/paquete/paquete.component';
 import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { BusquedaComponent } from './pages/busqueda/busqueda.component';
 
 const routes:Routes=[
   {
@@ -19,6 +20,10 @@ const routes:Routes=[
       {
         path:'paquete/:id',
         component:PaqueteComponent
+      },
+      {
+        path:'paquetes/:termino',
+        component:BusquedaComponent
       },
       {
         path:'about',

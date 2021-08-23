@@ -1,4 +1,4 @@
-<div class="row animate fadeIn fast" *ngIf="cargando">
+<div class="row" *ngIf="cargando">
     <div class="col-12">
         <div class=" alert alert-info text-center" role="alert">
             <h4 class="alert-heading">Cargando</h4>
@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<div class="paquete-container" *ngIf="!cargando">
+<div class="paquete-container animate__animated animate__fadeIn" *ngIf="!cargando">
     <h2>{{paquete.nombre}}</h2>
     <hr>
     <div class="row">
@@ -36,14 +36,14 @@
         <div class="col-md-7 col-sm-12">
             <div class="card mb-2">
                 <div class="card-body">
-                    <h5 class="card-title">DESCRIPCION</h5>
+                    <h5 class="card-title">DESCRIPCIÓN</h5>
                     <p class="card-text text-justify">{{paquete.descripcion}}</p> <br>
                     <h5><i class="fas fa-building"></i> {{paquete.empresa.nombre}}</h5>
                     <div class="row">
                         <div class="col-sm-6">
                             <b><i class="fas fa-shopping-cart"></i> Precios:</b>
-                            <span class="badge badge-secondary m-2"><i class="fas fa-child"></i> Niño: ${{paquete.precio_adulto}}</span>
-                            <span class="badge badge-secondary m-2"><i class="fas fa-male"></i> Adulto: ${{paquete.precio_nino}}</span>
+                            <span class="badge badge-success m-2"><i class="fas fa-child"></i> Niño: ${{paquete.precio_adulto}}</span>
+                            <span class="badge badge-success m-2"><i class="fas fa-male"></i> Adulto: ${{paquete.precio_nino}}</span>
                         </div>
                         <div class="col-sm-6">
                             <b><i class="fas fa-map-marked-alt"></i> Lugar:</b>
