@@ -1,1 +1,26 @@
-<p>contact works!</p>
+<div class="d-flex justify-content-center animate__animated animate__fadeIn">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="text-center text-uppercase">Escribenos para cualquier duda, aclaración o sugerencia</h5>
+            <form class="mt-4" [formGroup]="formContacto" (ngSubmit)="enviarComentario()">
+                <div class="form-group">
+                    <label for="correo">Correo electrónico:</label>
+                    <input type="email" class="form-control" formControlName="correo" id="correo" placeholder="nombre@ejemplo.com">
+                </div>
+                <div class="form-group">
+                    <label for="titulo">Titulo:</label>
+                    <input class="form-control" type="text" formControlName="titulo" id="titulo">
+                    <label for="comentario">Comentario:</label>
+                    <textarea class="form-control" id="comentario" formControlName="comentario" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-paper-plane"></i> Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="mt-5">
+    <p class="text-center">NOS ENCONTRAMOS UBICADOS EN LA SIGUIENTE DIRECCIÓN:</p>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d1324.3982255692363!2d-92.81468411393666!3d17.723418368112355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x85edc19ee82f3299%3A0x2fccf51651062c07!2sSan%20Jos%C3%A9%2C%2086850%20Jalapa%2C%20Tab.!3m2!1d17.7237299!2d-92.81411299999999!5e0!3m2!1ses!2smx!4v1629682550565!5m2!1ses!2smx"
+        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+</div>

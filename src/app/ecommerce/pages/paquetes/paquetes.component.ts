@@ -38,7 +38,7 @@ export class PaquetesComponent implements OnInit, OnChanges {
     this.paqueteService.cargarPaquetes(this.busqueda)
     .subscribe((paquetes) => {
       this.cargando = false;
-      this.paquetes=paquetes;
+      this.paquetes=paquetes.results;
       console.log(this.paquetes);
 
     });

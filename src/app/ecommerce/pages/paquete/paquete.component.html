@@ -42,8 +42,8 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <b><i class="fas fa-shopping-cart"></i> Precios:</b>
-                            <span class="badge badge-success m-2"><i class="fas fa-child"></i> Niño: ${{paquete.precio_adulto}}</span>
-                            <span class="badge badge-success m-2"><i class="fas fa-male"></i> Adulto: ${{paquete.precio_nino}}</span>
+                            <span class="badge badge-info m-2"><i class="fas fa-child"></i> Niño: ${{paquete.precio_adulto}}</span>
+                            <span class="badge badge-info m-2"><i class="fas fa-male"></i> Adulto: ${{paquete.precio_nino}}</span>
                         </div>
                         <div class="col-sm-6">
                             <b><i class="fas fa-map-marked-alt"></i> Lugar:</b>
@@ -55,13 +55,13 @@
     </div>
     <div class="mt-4 mb-4">
         <p class="text-center">
-            <a class="btn btn-info m-1" data-toggle="collapse" href="#caracteristicasPaquete" role="button" aria-expanded="false" aria-controls="caracteristicasPaquete"><i class="fas fa-stream"></i> Caracteristicas</a>
-            <button class="btn btn-info m-1" type="button" data-toggle="collapse" data-target="#informacionPaquete" aria-expanded="false" aria-controls="informacionPaquete"><i class="fas fa-info"></i> Informacion adicional</button>
+            <a class="btn btn-outline-info m-1" data-toggle="collapse" href="#caracteristicasPaquete" role="button" aria-expanded="false" aria-controls="caracteristicasPaquete"><i class="fas fa-stream"></i> Caracteristicas</a>
+            <button class="btn btn-outline-info m-1" type="button" data-toggle="collapse" data-target="#informacionPaquete" aria-expanded="false" aria-controls="informacionPaquete"><i class="fas fa-info"></i> Informacion adicional</button>
         </p>
         <div class="row">
-            <div class="col-md-6 col-sm-12 mb-3">
-                <div class="collapse multi-collapse" id="caracteristicasPaquete">
-                    <div class="card card-body">
+            <div class="col-md-6 col-sm-12 mb-sm-3 mb-md-0">
+                <div class="collapse multi-collapse h-100" id="caracteristicasPaquete">
+                    <div class="card card-body h-100">
                         <b>Caracteristicas:</b>
                         <ul>
                             <li *ngFor="let caracteristica of paquete.caracteristicas">{{caracteristica.descripcion}}</li>
@@ -70,8 +70,8 @@
                 </div>
             </div>
             <div class="col-md-6 col-sm-12">
-                <div class="collapse multi-collapse" id="informacionPaquete">
-                    <div class="card card-body">
+                <div class="collapse multi-collapse h-100" id="informacionPaquete">
+                    <div class="card card-body h-100">
                         <b>Informacion adicional:</b>
                         <ul>
                             <li *ngFor="let informacion of paquete.informacion.detail">{{informacion}}</li>
@@ -81,29 +81,105 @@
             </div>
         </div>
     </div>
-    <div class="venta text-center">
-        <b id="title-compra">COMPRAR</b>
-        <form>
-            <div class="form-row align-items-center justify-content-center">
-                <div class="col-auto">
-                    <label class="sr-only" for="inlineAdulto">Adultos</label>
-                    <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text"><i class="fas fa-male"></i></div>
-                        </div>
-                        <input type="number" class="form-control" id="inlineAdulto" placeholder="Adultos">
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <label class="sr-only" for="inlineNino">Niños</label>
-                    <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text"><i class="fas fa-child"></i></div>
-                        </div>
-                        <input type="number" class="form-control" id="inlineNino" placeholder="Niños">
+    <div class="venta">
+        <div class="text-center">
+            <h5 id="title-compra">COMPRAR PAQUETE</h5>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-7 col-lg-8 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center mb-3"><b>Datos para la compra:</b></div>
+                        <form [formGroup]="formPago" (ngSubmit)="pagar()">
+                            <div class="form-row">
+                                <div class="form-group col-lg-4 col-md-6">
+                                    <label for="nombre">Nombre:</label>
+                                    <input type="text" class="form-control" id="nombre" formControlName="nombre" [class.is-invalid]="campoNoValido('nombre')">
+                                    <small *ngIf="campoNoValido('nombre')" class="text-center text-danger">
+                                        El campo es obligatorio
+                                    </small>
+                                </div>
+                                <div class="form-group col-lg-4 col-md-6">
+                                    <label for="apellidos">Apellidos:</label>
+                                    <input type="text" class="form-control" id="apellidos" formControlName="apellidos" [class.is-invalid]="campoNoValido('apellidos')">
+                                    <small *ngIf="campoNoValido('apellidos')" class="text-center text-danger">
+                                        El campo es obligatorio
+                                    </small>
+                                </div>
+                                <div class="form-group col-lg-4 col-md-6">
+                                    <label for="correo">Correo:</label>
+                                    <input type="text" class="form-control" id="correo" formControlName="email" [class.is-invalid]="campoNoValido('email')">
+                                    <small *ngIf="campoNoValido('email')" class="text-center text-danger">
+                                        El correo es obligatorio y debe ser uno válido
+                                    </small>
+                                </div>
+                                <div class="form-group col-lg-4 col-md-6">
+                                    <label for="fecha">Fecha:</label>
+                                    <input type="date" (change)="detalleVenta.fecha = $event.target.value" class="form-control" id="fecha" formControlName="fecha" [class.is-invalid]="campoNoValido('fecha')">
+                                    <small *ngIf="campoNoValido('fecha')" class="text-center text-danger">
+                                        La fecha es obligatoria y debe ser mayor a la actual
+                                    </small>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <label for="adulto">Adultos:</label>
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="fas fa-male"></i></div>
+                                        </div>
+                                        <input type="number" (keyup)="calcularTotal($event.target.value);" class="form-control" id="adulto" placeholder="Cantidad" formControlName="cantidad_adultos" [class.is-invalid]="campoNoValido('cantidad_adultos')">
+                                    </div>
+                                    <small *ngIf="campoNoValido('cantidad_adultos')" class="text-center text-danger">
+                                        Debe ser mayor a 1
+                                    </small>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <label for="nino">Niños:</label>
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="fas fa-child"></i></div>
+                                        </div>
+                                        <input type="number" (keyup)="calcularTotal('',$event.target.value);" class="form-control" id="nino" placeholder="Cantidad" formControlName="cantidad_ninos" [class.is-invalid]="campoNoValido('cantidad_ninos')">
+                                        <small *ngIf="campoNoValido('cantidad_ninos')" class="text-center text-danger">
+                                            El campo es obligatorio
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-3 mb-3">
+                                <label for="tarjeta">Datos de la tarjeta:</label>
+                                <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-outline-primary btn-block mt-2 w-75"><i class="fas fa-credit-card"></i> Proceder a pagar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </form>
+            <div class="col-sm-12 col-md-5 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <b>Información detallada de compra:</b>
+                        </div>
+                        <div class="row text-center detalle-compra">
+                            <div class="col-md-6">
+                                <p><i class="fas fa-male"></i> Adultos:</p>
+                                <p><i class="fas fa-child"></i> Niños:</p>
+                                <p><i class="fas fa-calendar-alt"></i> Fecha:</p>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <p>${{detalleVenta.adulto}}</p>
+                                <p>${{detalleVenta.nino}}</p>
+                                <p>{{detalleVenta.fecha}}</p>
+                            </div>
+                        </div>
+                        <div class="text-center detalle-compra">
+                            <p><i class="fas fa-shopping-cart"></i> Total: <span>${{detalleVenta.total}}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

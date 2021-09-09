@@ -19,7 +19,7 @@ export class PaqueteService {
     { params: new HttpParams().set('nombre', filtro) } : {};
 
     return this.http.get(url,options).pipe(
-      map((resp:Paquete[]) => resp)
+      map((resp:{results:Paquete[]}) => resp)
     );
   }
 

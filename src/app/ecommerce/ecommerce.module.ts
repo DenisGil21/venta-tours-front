@@ -9,13 +9,23 @@ import { PaquetesComponent } from './pages/paquetes/paquetes.component';
 import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { BusquedaComponent } from './pages/busqueda/busqueda.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxStripeModule } from 'ngx-stripe';
 
 
 
 @NgModule({
-  declarations: [HomeComponent, PaqueteComponent, PaquetesComponent, AboutComponent, ContactComponent, BusquedaComponent],
+  declarations: [
+    HomeComponent, 
+    PaqueteComponent, 
+    PaquetesComponent, 
+    AboutComponent, 
+    ContactComponent, 
+    BusquedaComponent,],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    NgxStripeModule.forChild('pk_test_51JSlffIoeFc45Xx5ItHOoCFIkgR772g65qxpbJpxkPggUKTsL1NZKNabv08xsUPHnvvtQ6mRWJuQPgCylmDnL7we00IeKzA51M'),
     EcommerceRoutingModule,
     SharedModule,
     ComponentsModule
