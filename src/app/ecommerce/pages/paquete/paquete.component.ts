@@ -41,30 +41,27 @@ export class PaqueteComponent implements OnInit {
   };
 
   public detalleVenta = new DetalleVenta();
-  public formPago:FormGroup;
+
+  public formPago = this.fb.group({
+    nombre:['', Validators.required],
+    apellidos:['', Validators.required],
+    email:['', [Validators.required,Validators.email]],
+    fecha:['', [Validators.required, this.validaFecha]],
+    cantidad_adultos:[0, Validators.min(1)],
+    cantidad_ninos:[0, Validators.required],
+  });
+
   public paquete:Paquete;
   public galerias: Galeria[];
   public cargando:boolean = true;
 
   constructor(private paqueteService:PaqueteService,private activatedRoute:ActivatedRoute, 
     private fb:FormBuilder, private stripeService: StripeService, private ventaService:VentaService) { 
-    this.formularioPago();
   }
 
   ngOnInit(): void {
     this.activatedRoute.params
     .subscribe(({id}) => this.cargarPaquete(id));
-  }
-
-  formularioPago(){
-    this.formPago = this.fb.group({
-      nombre:['', Validators.required],
-      apellidos:['', Validators.required],
-      email:['', [Validators.required,Validators.email]],
-      fecha:['', [Validators.required, this.validaFecha]],
-      cantidad_adultos:[0, Validators.min(1)],
-      cantidad_ninos:[0, Validators.required],
-    });
   }
 
   campoNoValido(campo:string):boolean {

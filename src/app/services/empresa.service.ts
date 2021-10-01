@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 import { Empresa } from '../interfaces/empresa.interface';
@@ -15,8 +15,19 @@ export class EmpresaService {
 
   constructor(private http: HttpClient) { }
 
-  cargarEmpresas(){
-    return this.http.get(url).pipe(
+  get headers(){
+    return {
+      headers:{
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    }
+  }
+
+  cargarEmpresas(filtro?:string){
+    const options = filtro ?
+    { params: new HttpParams().set('search', filtro) } : {};
+    
+    return this.http.get(url,options).pipe(
       map((resp:Empresa[]) => resp)
     );
   }
@@ -25,5 +36,17 @@ export class EmpresaService {
     return this.http.get(`${url}/${id}/paquetes`).pipe(
       map((resp:Paquete[])=> resp)
     );
+  }
+
+  crearEmpresa(nombre:string){
+    return this.http.post(url,{nombre}, this.headers);
+  }
+
+  actualizarEmpresa(id:number,nombre:string){
+    return this.http.put(`${url}/${id}`,{nombre}, this.headers);
+  }
+
+  eliminarEmpresa(id:number){
+    return this.http.delete(`${url}/${id}`,this.headers);
   }
 }

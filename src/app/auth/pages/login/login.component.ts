@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { UsuarioService } from '../../../services/usuario.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +11,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  public cargando:boolean = false;
+
+  public loginForm = this.fb.group({
+    username: ['', [Validators.required]],
+    password: ['', Validators.required],
+  });
+
+  constructor(private fb:FormBuilder, private usuario:UsuarioService, private router:Router) { }
 
   ngOnInit(): void {
+  }
+
+  login(){
+    if (!this.loginForm.valid) {
+      Swal.fire('Error', 'Los campos no deben estar vacíos', 'error');
+      return
+    }
+    this.cargando = true;
+    this.usuario.login(this.loginForm.value)
+    .subscribe(resp =>{
+      console.log(resp);
+      this.router.navigateByUrl('/account');
+      
+    },(err)=>{
+      Swal.fire('Error', err.error.detail, 'error');
+      this.cargando = false;
+    })
   }
 
 }

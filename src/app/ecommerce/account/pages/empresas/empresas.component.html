@@ -1,0 +1,58 @@
+<a class="btn btn-info mb-3" routerLink="/account"><i class="fas fa-arrow-left"></i> Regresar</a>
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <input type="text" class="form-control" placeholder="Buscar empresa" (keyup)="buscar(txtTermino)" #txtTermino>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row animate fadeIn fast mt-4" *ngIf="cargando">
+    <div class="col-12">
+        <div class=" alert alert-info text-center" role="alert">
+            <h4 class="alert-heading">Cargando</h4>
+            <div class="spinner"></div>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="!cargando">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-8">
+                        <h4>Lista de empresas</h4>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-right">
+                            <button class="btn btn-primary fa-pull-right mb-3" (click)="abrirSweetAlert()"><i class="fas fa-plus-square"></i> Agregar empresa</button>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col" class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let empresa of empresas">
+                            <td><input type="text" class="form-control" placeholder="Nombre de la compañia" [(ngModel)]="empresa.nombre"></td>
+                            <td class="text-center">
+                                <a class="cursor m-1" (click)="actualizarEmpresa(empresa)" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></a>
+                                <a class="cursor m-1" (click)="eliminarEmpresa(empresa)" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>

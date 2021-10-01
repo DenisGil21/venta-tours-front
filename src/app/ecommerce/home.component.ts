@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PaqueteService } from '../../../services/paquete.service';
+import { PaqueteService } from '../services/paquete.service';
 
 @Component({
   selector: 'app-home',
