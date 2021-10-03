@@ -84,7 +84,7 @@ export class EmpresasComponent implements OnInit,AfterViewChecked {
 
   eliminarEmpresa(empresa: Empresa) {
     Swal.fire({
-      title: 'Eliminar empresa?',
+      title: '¿Eliminar empresa?',
       text: `Esta a punto de eliminar a ${empresa.nombre}`,
       icon: 'question',
       showCancelButton: true,

@@ -7,3 +7,12 @@ body {
 .cursor {
     cursor: pointer;
 }
+
+.avatar {
+    width: 80px;
+}
+
+.img-avatar {
+    width: 150px;
+    height: 150px;
+}

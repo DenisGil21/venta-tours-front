@@ -1,0 +1,129 @@
+<a class="btn btn-info mb-3" routerLink="/account/paquetes"><i class="fas fa-arrow-left"></i> Regresar</a>
+
+<div class="card animate__animated animate__fadeIn">
+    <div class="card-body">
+        <h3 class="card-title">Datos del paquete</h3>
+        <form [formGroup]="paqueteForm" (ngSubmit)="guardarPaquete()">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-3">
+                    Portada:
+                    <div class="text-center mb-1">
+                        <img *ngIf="!imgTemp" alt="" src="../../../../../assets/icons/no-img.png" class="img-avatar">
+                        <img *ngIf="imgTemp" [src]="imgTemp" alt="" class="img-avatar">
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" (change)="cambiarPortada($event.target.files[0])" id="customFile">
+                        <label class="custom-file-label" for="customFile">Selecciona imagen</label>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-6">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label for="nombre">Nombre del paquete:</label>
+                                <input type="text" class="form-control" id="nombre" formControlName="nombre">
+                                <small *ngIf="campoNoValido('nombre')" class="text-center text-danger">
+                            El campo es obligatorio
+                        </small>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label for="precio_adulto">Precio adulto:</label>
+                                <input type="number" class="form-control" id="precio_adulto" formControlName="precio_adulto">
+                                <small *ngIf="campoNoValido('precio_adulto')" class="text-center text-danger">
+                            El campo es obligatorio
+                        </small>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label for="precio_nino">Precio niño:</label>
+                                <input type="number" class="form-control" id="precio_nino" formControlName="precio_nino">
+                                <small *ngIf="campoNoValido('precio_nino')" class="text-center text-danger">
+                            El campo es obligatorio
+                        </small>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label for="empresa">Seleccione empresa</label>
+                                <select class="form-control" id="empresa" formControlName="empresa">
+                        <option value="">Seleccione empresa</option>
+                        <option *ngFor="let empresa of empresas" [value]="empresa.id">{{empresa.nombre}}</option>
+                      </select>
+                                <small *ngIf="campoNoValido('empresa')" class="text-center text-danger">
+                        El campo es obligatorio
+                    </small>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="descripcion">Descripción:</label>
+                                <textarea class="form-control" id="descripcion" rows="3" formControlName="descripcion"></textarea>
+                                <small *ngIf="campoNoValido('descripcion')" class="text-center text-danger">
+                            El campo es obligatorio
+                        </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Caracteristica</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody formArrayName="caracteristicas">
+                            <tr *ngFor="let control of caracteristicas.controls; let i = index">
+                                <td>
+                                    <input class="form-control" type="tex" [formControlName]="i">
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger btn-block" (click)="borrarCaracteristica(i)">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-success btn-block mb-3 mb-lg-0" type="button" (click)="agregarCaracteristica()">
+                        <i class="fas fa-plus-square"></i> Agregar
+                    </button>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Informacióm adicional</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody formArrayName="informacion">
+                            <tr *ngFor="let control of informacion.controls; let i = index">
+                                <td>
+                                    <input class="form-control" type="tex" [formControlName]="i">
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger btn-block" (click)="borrarInformacion(i)">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-success btn-block" type="button" (click)="agregarInformacion()">
+                        <i class="fas fa-plus-square"></i> Agregar
+                    </button>
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-center">
+                <button type="submit" class="btn btn-primary btn-block mt-4 w-50"><i class="fas fa-save"></i> Guardar Paquete</button>
+            </div>
+        </form>
+    </div>
+</div>

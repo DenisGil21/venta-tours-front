@@ -1,1 +1,76 @@
-<p>admin-paquetes works!</p>
+<a class="btn btn-info mb-3" routerLink="/account"><i class="fas fa-arrow-left"></i> Regresar</a>
+<div class="row mb-3 animate__animated animate__fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <input type="text" class="form-control" placeholder="Buscar paquete" (keyup)="buscar(txtTermino.value)" #txtTermino>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4" *ngIf="cargando">
+    <div class="col-12">
+        <div class=" alert alert-info text-center" role="alert">
+            <h4 class="alert-heading">Cargando</h4>
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div>
+<div class="row animate__animated animate__fadeIn" *ngIf="!cargando">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-8">
+                        <h4>Lista de paquetes</h4>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-right">
+                            <button class="btn btn-primary fa-pull-right mb-3" [routerLink]="['/account','paquete','nuevo']"><i class="fas fa-plus-square"></i> Agregar paquete</button>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered text-center">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Portada</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Precio adulto</th>
+                            <th scope="col">Precio niño</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let paquete of paquetes">
+                            <td><img class="avatar" [src]="paquete.portada" alt=""></td>
+                            <td>{{paquete.nombre}}</td>
+                            <td>${{paquete.precio_adulto}}</td>
+                            <td>${{paquete.precio_nino}}</td>
+                            <td>
+                                <a class="cursor m-1" (click)="editarPaquete(paquete.id)" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></a>
+                                <a class="cursor m-1" (click)="eliminarPaquete(paquete)" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <nav aria-label="..." *ngIf="txtTermino.value.length === 0">
+                    <ul class="pagination">
+                        <li class="page-item" [ngClass]="{'disabled':!previousPage}">
+                            <button (click)="paginacion(previousPage)" class="page-link" tabindex="-1" aria-disabled="true">Anterior</button>
+                        </li>
+                        <li class="page-item" [ngClass]="{'disabled':!nextPage}">
+                            <button class="page-link" (click)="paginacion(nextPage)">Siguiente</button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+</div>
