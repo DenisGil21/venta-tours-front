@@ -53,6 +53,13 @@ export class PaqueteService {
     )
   }
 
+  actualizarPaquete(paquete:any, id:number){
+    return this.http.put(`${url}/${id}`,paquete,this.headers)
+    .pipe(
+      map((resp:Paquete) => resp)
+    );
+  }
+
   async subirPortada(portada: File, id: number){
     try {
       const formData = new FormData();

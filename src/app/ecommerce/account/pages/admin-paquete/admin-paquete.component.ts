@@ -5,7 +5,9 @@ import { Empresa } from '../../../../interfaces/empresa.interface';
 import { PaqueteService } from '../../../../services/paquete.service';
 import { CaracteristicaService } from '../../../../services/caracteristica.service';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Paquete } from '../../../../interfaces/paquete.interface';
+import { Caracteristica } from '../../../../interfaces/caracteristica.interface';
 
 @Component({
   selector: 'app-admin-paquete',
@@ -18,9 +20,13 @@ export class AdminPaqueteComponent implements OnInit {
   public empresas:Empresa[];
   public portada:File;
   public imgTemp:any = null;
+  public imgCarga:string;
+  public paqueteSeleccionado:Paquete;
+  public caracteristicasSeleccionado:Caracteristica[]=[];
+  public caracteristicasEliminar:number[] = [];
 
   constructor(private fb: FormBuilder, private empresaService: EmpresaService, private paqueteService: PaqueteService, private caracteristicaService: CaracteristicaService,
-    private router:Router) { }
+    private router:Router, private activatedRoute: ActivatedRoute) { }
 
   get caracteristicas(){
     return this.paqueteForm.get('caracteristicas') as FormArray;
@@ -31,6 +37,8 @@ export class AdminPaqueteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.activatedRoute.params
+    .subscribe(({id}) => this.cargarPaquete(id));
     this.formulario();
     this.cargarEmpresas();
   }
@@ -60,50 +68,104 @@ export class AdminPaqueteComponent implements OnInit {
     });
   }
 
+  cargarPaquete(id:string){
+    if (id == 'nuevo') {
+      return;
+    }
+    this.paqueteService.cargarPaquete(Number(id))
+    .subscribe(paquete => {
+      console.log(paquete);
+      this.paqueteSeleccionado = paquete;
+      this.caracteristicasSeleccionado = paquete.caracteristicas;
+      this.paqueteForm.reset({nombre:paquete.nombre, precio_adulto: paquete.precio_adulto, precio_nino: paquete.precio_nino,
+      empresa:paquete.empresa.id, descripcion: paquete.descripcion});
+
+      paquete.caracteristicas.forEach(valor => {
+        this.caracteristicas.push(this.fb.control({value:valor.descripcion, disabled:true}));
+      });
+      paquete.informacion.forEach(valor => {
+        this.informacion.push(this.fb.control({value:valor, disabled:true}))
+      });
+
+      this.imgCarga = paquete.portada;
+    });
+  }
+
   guardarPaquete(){
     if (this.paqueteForm.invalid) {
       return Object.values(this.paqueteForm.controls).forEach(control => {
         control.markAllAsTouched();
       });
     }
-    if(!this.portada){
-      Swal.fire('Error', 'Debe seleccionar una portada', 'error');  
-        return ;
+    if(!this.paqueteSeleccionado){
+      if(!this.portada){
+        Swal.fire('Error', 'Debe seleccionar una portada', 'error');  
+          return ;
+      }
+      const allowedExtensions = /(.jpg|.jpeg|.png|.gif)$/i;
+      if(!allowedExtensions.exec(this.portada.name)){
+        Swal.fire('Error', 'Debe ser una imagen con una de las siguientes extensiones (.jpeg/.jpg/.png/.gif)', 'error');  
+          return ;
+      }
     }
-    const allowedExtensions = /(.jpg|.jpeg|.png|.gif)$/i;
-    if(!allowedExtensions.exec(this.portada.name)){
-      Swal.fire('Error', 'Debe ser una imagen con una de las siguientes extensiones (.jpeg/.jpg/.png/.gif)', 'error');  
-        return ;
+    if (this.paqueteSeleccionado) {
+      this.paqueteService.actualizarPaquete(this.paqueteForm.value,this.paqueteSeleccionado.id)
+      .subscribe(resp => {
+        this.caracteristicasEliminar.forEach(valor => {
+          this.caracteristicaService.eliminarCaracteristica(valor).subscribe();
+        })
+        this.caracteristicas.controls.forEach(valor => {
+          let encontro = this.caracteristicasSeleccionado.find(value => value.descripcion == valor.value);
+          if(!encontro){
+            this.caracteristicaService.guardarCaracteristica(valor.value,resp.id).subscribe();
+          }
+        });
+        this.paqueteService.subirPortada(this.portada, resp.id)
+        .then(portada => {
+          console.log(portada);
+          
+        }).catch(err => {
+          console.log(err);
+        });
+        Swal.fire('Actualizado', 'Paquete actualizado correctamente', 'success');
+        this.router.navigateByUrl('/account/paquetes')
+      }),(err) => {
+        Swal.fire('Error', err, 'error');
+      };
+    }else{
+      const data = {
+        ...this.paqueteForm.value
+      }
+      delete data.caracteristicas;
+  
+      this.paqueteService.guardarPaquete(data)
+      .subscribe(resp => {
+        this.caracteristicas.controls.forEach(valor => {
+          this.caracteristicaService.guardarCaracteristica(valor.value,resp.id).subscribe();
+        });
+        this.paqueteService.subirPortada(this.portada, resp.id)
+        .then(portada => {
+          console.log(portada);
+          
+        }).catch(err => {
+          console.log(err);
+          
+        });
+        Swal.fire('Creado', 'Paquete creado correctamente', 'success');
+        this.router.navigateByUrl(`/account/galeria/paquete/${resp.id}`)
+      }),(err) => {
+        Swal.fire('Error', err, 'error');
+      };
     }
-    console.log(this.paqueteForm.value);
-    const data = {
-      ...this.paqueteForm.value
-    }
-    delete data.caracteristicas;
-
-    this.paqueteService.guardarPaquete(data)
-    .subscribe(resp => {
-      this.caracteristicas.controls.forEach(valor => {
-        this.caracteristicaService.guardarCaracteristica(valor.value,resp.id).subscribe();
-      });
-      this.paqueteService.subirPortada(this.portada, resp.id)
-      .then(portada => {
-        console.log(portada);
-        
-      }).catch(err => {
-        console.log(err);
-        
-      });
-      Swal.fire('Creado', 'Paquete creado correctamente', 'success');
-      this.router.navigateByUrl('/account/paquetes')
-    }),(err) => {
-      Swal.fire('Error', err, 'error');
-    };
     
   }
 
 
-  borrarCaracteristica(i:number){
+  borrarCaracteristica(i:number,id:number){    
+    if (this.paqueteSeleccionado) {      
+      this.caracteristicasSeleccionado = this.caracteristicasSeleccionado.filter(value => value.id != id);
+      this.caracteristicasEliminar.push(id);
+    }
     this.caracteristicas.removeAt(i);
   }
 

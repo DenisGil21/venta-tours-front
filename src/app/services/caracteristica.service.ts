@@ -23,4 +23,8 @@ export class CaracteristicaService {
   guardarCaracteristica(descripcion:string, paquete:number){
     return this.http.post(url,{descripcion,paquete},this.headers)
   }
+
+  eliminarCaracteristica(id:number){
+    return this.http.delete(`${url}/${id}`,this.headers);
+  }
 }
