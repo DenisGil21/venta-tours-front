@@ -32,6 +32,7 @@ export class UsuarioService {
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('refresh');
+    localStorage.removeItem('username');
   }
 
   validarToken():Observable<boolean>{
@@ -42,6 +43,7 @@ export class UsuarioService {
         const {username, email, pk} = resp.user;
         this.usuario = new Usuario(username,email,pk)
         localStorage.setItem('token', resp.access);
+        localStorage.setItem('username',username)
         return true
       }),
       catchError(error => of(false))

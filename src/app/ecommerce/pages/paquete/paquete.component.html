@@ -18,8 +18,8 @@
             <div id="carousel" class="mb-3">
                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
-                        <div [ngClass]="{active:isFirst}" class="carousel-item" *ngFor="let galeria of galerias; first as isFirst">
-                            <img class="d-block w-100" [src]="galeria.imagen" alt="Second slide">
+                        <div [ngClass]="{active:isFirst}" style="height: 350px;" class="carousel-item" *ngFor="let galeria of galerias; first as isFirst">
+                            <img class="d-block w-100 h-100" [src]="galeria.imagen" alt="Second slide">
                         </div>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">

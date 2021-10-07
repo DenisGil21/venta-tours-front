@@ -30,7 +30,12 @@ export class AdminPaquetesComponent implements OnInit, AfterViewChecked {
 
   editarPaquete(id:number){
     $('[data-toggle="tooltip"]').tooltip('dispose');
-    this.router.navigateByUrl(`/account/paquete/${id}`)
+    this.router.navigateByUrl(`/account/paquete/${id}`);
+  }
+
+  irGaleria(id:number){
+    $('[data-toggle="tooltip"]').tooltip('dispose');
+    this.router.navigateByUrl(`/account/galeria/paquete/${id}`);
   }
 
   cargarPaquetes(){

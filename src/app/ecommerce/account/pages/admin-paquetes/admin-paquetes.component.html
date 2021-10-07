@@ -1,4 +1,9 @@
-<a class="btn btn-info mb-3" routerLink="/account"><i class="fas fa-arrow-left"></i> Regresar</a>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/account">Cuenta</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Paquetes</li>
+    </ol>
+</nav>
 <div class="row mb-3 animate__animated animate__fadeIn">
     <div class="col-12">
         <div class="card">
@@ -53,6 +58,7 @@
                             <td>${{paquete.precio_nino}}</td>
                             <td>
                                 <a class="cursor m-1" (click)="editarPaquete(paquete.id)" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></a>
+                                <a class="cursor m-1" (click)="irGaleria(paquete.id)" data-toggle="tooltip" data-placement="top" title="Galeria"><i class="fas fa-images"></i></a>
                                 <a class="cursor m-1" (click)="eliminarPaquete(paquete)" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>

@@ -13,16 +13,15 @@ export class HeaderComponent implements OnInit {
   public usuario:Usuario
 
   constructor(private router:Router, private usuarioService: UsuarioService) {
-    this.usuario=this.usuarioService.usuario;    
    }
 
   ngOnInit(): void {
-    console.log(this.usuario);
     
   }
 
   existeUsuario():boolean{
-    if(this.usuario && localStorage.getItem('token')){
+    if(localStorage.getItem('token')){
+      this.usuario = new Usuario(localStorage.getItem('username'),'');
       return true
     }else{
       return false
