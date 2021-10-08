@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { EmpresaService } from '../../../../services/empresa.service';
-import { Empresa } from '../../../../interfaces/empresa.interface';
-import { PaqueteService } from '../../../../services/paquete.service';
-import { CaracteristicaService } from '../../../../services/caracteristica.service';
+import { EmpresaService } from '../../../services/empresa.service';
+import { Empresa } from '../../../interfaces/empresa.interface';
+import { PaqueteService } from '../../../services/paquete.service';
+import { CaracteristicaService } from '../../../services/caracteristica.service';
 import Swal from 'sweetalert2';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Paquete } from '../../../../interfaces/paquete.interface';
-import { Caracteristica } from '../../../../interfaces/caracteristica.interface';
+import { Paquete } from '../../../interfaces/paquete.interface';
+import { Caracteristica } from '../../../interfaces/caracteristica.interface';
 
 @Component({
   selector: 'app-admin-paquete',

@@ -18,6 +18,7 @@ export class AuthGuard implements CanActivate, CanLoad {
       return this.usuarioService.validarToken().pipe(
         tap(autenticado => {
           if (!autenticado) {
+            localStorage.removeItem('username')
             this.router.navigateByUrl('/auth/login');
           }
         })
@@ -29,6 +30,7 @@ export class AuthGuard implements CanActivate, CanLoad {
       return this.usuarioService.validarToken().pipe(
         tap(autenticado => {
           if (!autenticado) {
+            localStorage.removeItem('username')
             this.router.navigateByUrl('/auth/login');
           }
         })

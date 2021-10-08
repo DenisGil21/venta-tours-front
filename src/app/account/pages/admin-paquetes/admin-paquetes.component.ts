@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewChecked, OnDestroy } from '@angular/core';
-import { PaqueteService } from '../../../../services/paquete.service';
-import { Paquete } from '../../../../interfaces/paquete.interface';
+import { PaqueteService } from '../../../services/paquete.service';
+import { Paquete } from '../../../interfaces/paquete.interface';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 declare var $:any;

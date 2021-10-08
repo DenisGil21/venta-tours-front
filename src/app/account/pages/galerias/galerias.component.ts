@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PaqueteService } from '../../../../services/paquete.service';
-import { Paquete } from '../../../../interfaces/paquete.interface';
-import { Galeria } from '../../../../interfaces/galeria.iterface';
+import { PaqueteService } from '../../../services/paquete.service';
+import { Paquete } from '../../../interfaces/paquete.interface';
+import { Galeria } from '../../../interfaces/galeria.iterface';
 import Swal from 'sweetalert2';
-import { GaleriaService } from '../../../../services/galeria.service';
+import { GaleriaService } from '../../../services/galeria.service';
 
 @Component({
   selector: 'app-galerias',

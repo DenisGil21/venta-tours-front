@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, AfterViewChecked } from '@angular/core';
-import { EmpresaService } from '../../../../services/empresa.service';
-import { Empresa } from '../../../../interfaces/empresa.interface';
+import { EmpresaService } from '../../../services/empresa.service';
+import { Empresa } from '../../../interfaces/empresa.interface';
 import Swal from 'sweetalert2';
 declare var $:any;
 @Component({

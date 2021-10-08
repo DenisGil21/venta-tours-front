@@ -4,6 +4,7 @@ import {HttpClientModule} from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotpagefoundComponent } from './notpagefound/notpagefound/notpagefound.component';
+import { AccountModule } from './account/account.module';
 
 @NgModule({
   declarations: [
