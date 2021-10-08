@@ -10,25 +10,11 @@ import { Usuario } from '../models/usuario.model';
 })
 export class AccountComponent implements OnInit {
 
-  public usuario: Usuario;
 
-  constructor(private router:Router, private usuarioService: UsuarioService) {
-    this.usuario = this.usuarioService.usuario;
+  constructor() {
    }
 
   ngOnInit(): void {
-  }
-
-  isAccountSetting():boolean{
-    if (this.router.url == '/account') {
-      return true
-    }else{      
-      return false
-    }
-  }
-
-  navegarModulo(url:string){
-    this.router.navigateByUrl(`account/${url}`);
-  }
+  }  
 
 }

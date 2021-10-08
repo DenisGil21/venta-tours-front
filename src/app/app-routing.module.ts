@@ -21,12 +21,8 @@ const routes: Routes = [
     canActivate:[AuthGuard]
   },
   {
-    path:'', 
+    path:'**', 
     redirectTo: '/home', pathMatch: 'full'
-  },
-  {
-    path: '**',
-    component: NotpagefoundComponent
   },
 ];
 

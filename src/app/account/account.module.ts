@@ -9,6 +9,7 @@ import { AdminPaqueteComponent } from './pages/admin-paquete/admin-paquete.compo
 import { GaleriasComponent } from './pages/galerias/galerias.component';
 import { SharedModule } from '../shared/shared.module';
 import { AccountRoutingModule } from './account-routing.module';
+import { PanelComponent } from './pages/panel/panel.component';
 
 
 
@@ -21,6 +22,7 @@ import { AccountRoutingModule } from './account-routing.module';
     AdminPaqueteComponent,
     GaleriasComponent,
     VentasComponent,
+    PanelComponent,
   ],
   imports: [
     CommonModule,
