@@ -11,6 +11,8 @@ import {
   StripeCardElementOptions,
   StripeElementsOptions,
 } from '@stripe/stripe-js';
+import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-paquete',
@@ -54,6 +56,7 @@ export class PaqueteComponent implements OnInit {
   public paquete:Paquete;
   public galerias: Galeria[];
   public cargando:boolean = true;
+  public payPalConfig?:IPayPalConfig;
 
   constructor(private paqueteService:PaqueteService,private activatedRoute:ActivatedRoute, 
     private fb:FormBuilder, private stripeService: StripeService, private ventaService:VentaService) { 
@@ -62,6 +65,7 @@ export class PaqueteComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params
     .subscribe(({id}) => this.cargarPaquete(id));
+    this.initConfig();
   }
 
   campoNoValido(campo:string):boolean {
@@ -137,5 +141,64 @@ export class PaqueteComponent implements OnInit {
     }
     this.detalleVenta.total = this.detalleVenta.adulto + this.detalleVenta.nino;
   }
+
+  private initConfig(): void {
+    this.payPalConfig = {
+        currency: 'MXN',
+        clientId: environment.paypal_client,
+        createOrderOnClient: (data) => <ICreateOrderRequest> {
+            intent: 'CAPTURE',
+            purchase_units: [{
+                amount: {
+                    currency_code: 'MXN',
+                    value: '9.99',
+                    breakdown: {
+                        item_total: {
+                            currency_code: 'MXN',
+                            value: '9.99'
+                        }
+                    }
+                },
+                items: [{
+                    name: 'Enterprise Subscription',
+                    quantity: '1',
+                    category: 'DIGITAL_GOODS',
+                    unit_amount: {
+                        currency_code: 'MXN',
+                        value: '9.99',
+                    },
+                }]
+            }]
+        },
+        advanced: {
+            commit: 'true'
+        },
+        style: {
+            label: 'paypal',
+            layout: 'vertical'
+        },
+        onApprove: (data, actions) => {
+            console.log('onApprove - transaction was approved, but not authorized', data, actions);
+            actions.order.get().then(details => {
+                console.log('onApprove - you can get full order details inside onApprove: ', details);
+            });
+
+        },
+        onClientAuthorization: (data) => {
+          //aqui hago lo del backend
+            console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+        },
+        onCancel: (data, actions) => {
+            console.log('OnCancel', data, actions);
+
+        },
+        onError: err => {
+            console.log('OnError', err);
+        },
+        onClick: (data, actions) => {
+            console.log('onClick', data, actions);
+        },
+    };
+}
 
 }

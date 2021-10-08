@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  base_url: 'http://127.0.0.1:8000'
+  base_url: 'http://127.0.0.1:8000',
+  paypal_client:'AYxFslgzAWGNfCvsGzZpEov3l0sA7hvOOB1gQutsWBwN4HuL0vmA3wM62587uUvYbXlOBWCbv_hHbOCg'
 };
 
 /*

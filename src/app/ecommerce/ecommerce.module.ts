@@ -17,6 +17,7 @@ import { AdminPaquetesComponent } from './account/pages/admin-paquetes/admin-paq
 import { VentasComponent } from './account/pages/ventas/ventas.component';
 import { AdminPaqueteComponent } from './account/pages/admin-paquete/admin-paquete.component';
 import { GaleriasComponent } from './account/pages/galerias/galerias.component';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 
 
@@ -39,6 +40,7 @@ import { GaleriasComponent } from './account/pages/galerias/galerias.component';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    NgxPayPalModule,
     NgxStripeModule.forChild('pk_test_51JSlffIoeFc45Xx5ItHOoCFIkgR772g65qxpbJpxkPggUKTsL1NZKNabv08xsUPHnvvtQ6mRWJuQPgCylmDnL7we00IeKzA51M'),
     EcommerceRoutingModule,
     SharedModule,
