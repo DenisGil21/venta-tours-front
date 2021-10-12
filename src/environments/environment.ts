@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   base_url: 'http://127.0.0.1:8000',
-  paypal_client:'AYxFslgzAWGNfCvsGzZpEov3l0sA7hvOOB1gQutsWBwN4HuL0vmA3wM62587uUvYbXlOBWCbv_hHbOCg'
+  paypal_client:'AYxFslgzAWGNfCvsGzZpEov3l0sA7hvOOB1gQutsWBwN4HuL0vmA3wM62587uUvYbXlOBWCbv_hHbOCg',
+  stripeKey:'pk_test_51JSlffIoeFc45Xx5ItHOoCFIkgR772g65qxpbJpxkPggUKTsL1NZKNabv08xsUPHnvvtQ6mRWJuQPgCylmDnL7we00IeKzA51M'
 };
 
 /*

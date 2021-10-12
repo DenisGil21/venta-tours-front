@@ -12,6 +12,7 @@ import { BusquedaComponent } from './pages/busqueda/busqueda.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxStripeModule } from 'ngx-stripe';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { environment } from '../../environments/environment';
 
 
 
@@ -29,7 +30,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
     ReactiveFormsModule,
     FormsModule,
     NgxPayPalModule,
-    NgxStripeModule.forChild('pk_test_51JSlffIoeFc45Xx5ItHOoCFIkgR772g65qxpbJpxkPggUKTsL1NZKNabv08xsUPHnvvtQ6mRWJuQPgCylmDnL7we00IeKzA51M'),
+    NgxStripeModule.forChild(environment.stripeKey),
     EcommerceRoutingModule,
     SharedModule,
     ComponentsModule

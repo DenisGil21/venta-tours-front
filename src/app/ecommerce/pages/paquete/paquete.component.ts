@@ -21,6 +21,10 @@ import { environment } from '../../../../environments/environment';
 })
 export class PaqueteComponent implements OnInit {
 
+  public paypal=false;
+  public tarjeta=false;
+  public estaComprando = true;
+
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
   cardOptions: StripeCardElementOptions = {
@@ -98,12 +102,6 @@ export class PaqueteComponent implements OnInit {
   }
 
   pagar(){    
-    if(this.formPago.invalid) {      
-      return Object.values(this.formPago.controls).forEach(control => {
-        control.markAllAsTouched();
-      });
-    } 
-
     const name = this.formPago.get('nombre').value;
       this.stripeService
         .createToken(this.card.element, { name })
@@ -132,6 +130,15 @@ export class PaqueteComponent implements OnInit {
 
   }
 
+  elegirPago(){    
+    if(this.formPago.invalid) {      
+      return Object.values(this.formPago.controls).forEach(control => {
+        control.markAllAsTouched();
+      });
+    } 
+    this.estaComprando = false;
+  }
+
   calcularTotal(adulto:any, nino?:any){
     if (adulto) {
       this.detalleVenta.adulto = this.paquete.precio_adulto * parseInt(adulto);
@@ -151,21 +158,21 @@ export class PaqueteComponent implements OnInit {
             purchase_units: [{
                 amount: {
                     currency_code: 'MXN',
-                    value: '9.99',
+                    value: String(this.detalleVenta.total),
                     breakdown: {
                         item_total: {
                             currency_code: 'MXN',
-                            value: '9.99'
+                            value: String(this.detalleVenta.total)
                         }
                     }
                 },
                 items: [{
-                    name: 'Enterprise Subscription',
+                    name: this.paquete.nombre,
                     quantity: '1',
-                    category: 'DIGITAL_GOODS',
+                    // category: 'DIGITAL_GOODS',
                     unit_amount: {
                         currency_code: 'MXN',
-                        value: '9.99',
+                        value: String(this.detalleVenta.total),
                     },
                 }]
             }]
@@ -186,7 +193,17 @@ export class PaqueteComponent implements OnInit {
         },
         onClientAuthorization: (data) => {
           //aqui hago lo del backend
-            console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+          console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+          const dataForm = {
+            ...this.formPago.value,
+            total : this.detalleVenta.total,
+            paquete:this.paquete.id,
+          }
+          this.ventaService.crearVenta(dataForm)
+          .subscribe((result)=>{
+            console.log(result);
+            
+          });
         },
         onCancel: (data, actions) => {
             console.log('OnCancel', data, actions);
@@ -199,6 +216,16 @@ export class PaqueteComponent implements OnInit {
             console.log('onClick', data, actions);
         },
     };
+}
+
+metodoPago(metodo:string){
+  if (metodo=='paypal') {
+    this.paypal = true;
+    this.tarjeta = false;
+  }else{
+    this.paypal = false;
+    this.tarjeta = true;
+  }
 }
 
 }
