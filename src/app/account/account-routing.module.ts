@@ -7,6 +7,7 @@ import { AdminPaqueteComponent } from './pages/admin-paquete/admin-paquete.compo
 import { GaleriasComponent } from './pages/galerias/galerias.component';
 import { VentasComponent } from './pages/ventas/ventas.component';
 import { PanelComponent } from './pages/panel/panel.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
       { path: 'paquete/:id', component: AdminPaqueteComponent },
       { path: 'galeria/paquete/:id', component:GaleriasComponent},
       { path: 'ventas', component: VentasComponent },
+      { path: 'perfil', component: PerfilComponent },
     ]
   }
   

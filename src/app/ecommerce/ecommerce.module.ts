@@ -13,6 +13,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxStripeModule } from 'ngx-stripe';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { environment } from '../../environments/environment';
+import { VentaComponent } from './pages/venta/venta.component';
 
 
 
@@ -23,7 +24,7 @@ import { environment } from '../../environments/environment';
     PaquetesComponent, 
     AboutComponent, 
     ContactComponent, 
-    BusquedaComponent,
+    BusquedaComponent, VentaComponent,
     ],
   imports: [
     CommonModule,

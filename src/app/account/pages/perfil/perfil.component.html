@@ -1,0 +1,72 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/account">Cuenta</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Perfil</li>
+    </ol>
+</nav>
+<div>
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <form [formGroup]="perfilForm" (ngSubmit)="actualizarPerfil()">
+                <h3>Datos de la cuenta</h3>
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" formControlName="first_name" [class.is-invalid]="campoNoValido('first_name')">
+                    <small *ngIf="campoNoValido('first_name')" class="text-center text-danger">
+                                El campo es obligatorio
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="apellidos">Apellidos</label>
+                    <input type="text" class="form-control" id="apellidos" formControlName="last_name" [class.is-invalid]="campoNoValido('last_name')">
+                    <small *ngIf="campoNoValido('last_name')" class="text-center text-danger">
+                                El campo es obligatorio
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="email">Correo electronico</label>
+                    <input type="email" class="form-control" id="email" formControlName="email" [class.is-invalid]="campoNoValido('email')">
+                    <small *ngIf="campoNoValido('email')" class="text-center text-danger">
+                                El campo es obligatorio y debe ser un correo valido
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="username">Nombre de usuario</label>
+                    <input type="email" class="form-control" id="username" formControlName="username" [class.is-invalid]="campoNoValido('username')">
+                    <small *ngIf="campoNoValido('username')" class="text-center text-danger">
+                                El campo es obligatorio
+                    </small>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sync"></i> Actualizar perfil</button>
+            </form>
+        </div>
+        <div class="col-lg-6">
+            <form [formGroup]="passwordForm" (ngSubmit)="actualizarPassword()">
+                <h3>Cambiar contraseña</h3>
+                <div class="form-group">
+                    <label for="old_password">Contraseña anterior</label>
+                    <input type="password" class="form-control" id="old_password" formControlName="old_password" [class.is-invalid]="campoNoValidoPassword('old_password')" autocomplete="false">
+                    <small *ngIf="campoNoValidoPassword('old_password')" class="text-center text-danger">
+                        El campo es obligatorio
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña nueva</label>
+                    <input type="password" class="form-control" id="password" formControlName="password" [class.is-invalid]="campoNoValidoPassword('password')" autocomplete="false">
+                    <small *ngIf="campoNoValidoPassword('password')" class="text-center text-danger">
+                        La contraseña debe ser mayor a 4 digitos
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="password2">Confirmar contraseña</label>
+                    <input type="password" class="form-control" id="password2" formControlName="password2" [class.is-invalid]="campoNoValidoPassword('password2')" autocomplete="false">
+                    <small *ngIf="campoNoValidoPassword('password2')" class="text-center text-danger">
+                        Las contraseñas no coinciden
+                    </small>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sync"></i> Actualizar contraseña</button>
+            </form>
+        </div>
+    </div>
+
+</div>

@@ -7,6 +7,8 @@ import { PaqueteComponent } from './pages/paquete/paquete.component';
 import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { BusquedaComponent } from './pages/busqueda/busqueda.component';
+import { VentaComponent } from './pages/venta/venta.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes:Routes=[
   {
@@ -32,6 +34,13 @@ const routes:Routes=[
       {
         path:'contact',
         component:ContactComponent
+      }, 
+      {
+        path:'paquete/:id/venta',
+        component:VentaComponent,
+        canLoad:[AuthGuard],
+        canActivate:[AuthGuard]
+        
       }, 
       {
         path:'', 

@@ -10,6 +10,7 @@ import { GaleriasComponent } from './pages/galerias/galerias.component';
 import { SharedModule } from '../shared/shared.module';
 import { AccountRoutingModule } from './account-routing.module';
 import { PanelComponent } from './pages/panel/panel.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
 
 
 
@@ -23,6 +24,7 @@ import { PanelComponent } from './pages/panel/panel.component';
     GaleriasComponent,
     VentasComponent,
     PanelComponent,
+    PerfilComponent,
   ],
   imports: [
     CommonModule,

@@ -1,1 +1,57 @@
-<p>registro works!</p>
+<!-- Just an image -->
+<nav class="navbar navbar-dark bg-info">
+    <a class="navbar-brand" routerLink="/home">
+        VentaTours
+        <!-- <img src="/docs/4.6/assets/brand/bootstrap-solid.svg" width="30" height="30" alt=""> -->
+    </a>
+</nav>
+<div style="    background-color: #17a2b8;
+display: block;
+height: 11.375rem;
+width: 100%; border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;">
+
+</div>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+
+        <!-- Icon -->
+        <div class="fadeIn first">
+            <!-- <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" /> -->
+            <h2>Registro</h2>
+        </div>
+
+        <!-- Login Form -->
+        <form (ngSubmit)=registro() [formGroup]=registroForm>
+            <input type="text" class="fadeIn second" formControlName="email" placeholder="Correo" autocomplete="off">
+            <input type="text" class="fadeIn second" formControlName="username" placeholder="Nombre de usuario" autocomplete="off">
+            <input type="password" id="password1" class="fadeIn third" formControlName="password" placeholder="Contraseña" autocomplete="off">
+            <input type="password" id="password2" class="fadeIn third" formControlName="password2" placeholder="Confirmar contraseña" autocomplete="off">
+            <input type="submit" class="fadeIn fourth" value="Registrarse">
+        </form>
+        <div class="row">
+            <div class="col text-danger">
+                <p *ngIf="campoNoValido('username')">* El nombre de usuario es obligatorio</p>
+                <p *ngIf="campoNoValido('email')">* El email es obligatorio y tiene que ser valido</p>
+                <p *ngIf="contrasenasNoValidas()">* Las contrasenas deben de ser iguales</p>
+            </div>
+        </div>
+        <div class="row" *ngIf="cargando">
+            <div class="col-12">
+                <div class=" alert alert-info text-center" role="alert">
+                    <h4 class="alert-heading">Iniciando sesión</h4>
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <p class="mb-0">Por favor espere</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Remind Passowrd -->
+        <div id="formFooter">
+            <a class="underlineHover" routerLink="/auth/login">Iniciar sesión</a>
+        </div>
+
+    </div>
+</div>

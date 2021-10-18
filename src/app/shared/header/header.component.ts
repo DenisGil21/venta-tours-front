@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
 
   existeUsuario():boolean{
     if(localStorage.getItem('username')){
-      this.usuario = new Usuario(localStorage.getItem('username'),'');
+      this.usuario = new Usuario(localStorage.getItem('username'),'','','');
       return true
     }else{
       return false
