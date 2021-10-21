@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { tap, map, catchError } from 'rxjs/operators';
 import { Login } from '../interfaces/login.interface';
 import { of, Observable } from 'rxjs';
@@ -78,4 +78,14 @@ export class UsuarioService {
       })
     );
   }
+
+  obtenerUsusarios(filtro?:string){
+    const options = filtro ?
+    { headers:new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`), params: new HttpParams().set('nombre', filtro) } : 
+    {headers:new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)};
+    return this.http.get(url,options).pipe(
+      map((resp:{next:string, previous:string, results:Usuario[]}) => resp) 
+    )
+  }
+
 }

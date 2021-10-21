@@ -87,15 +87,8 @@ export class AdminPaquetesComponent implements OnInit, AfterViewChecked {
     })
   }
 
-  paginacion(paginacion:string){
-    this.cargando = true;
-    this.paqueteService.paginacionPaquetes(paginacion)
-    .subscribe(paquetes => {
-      this.cargando = false;
-      this.paquetes = paquetes.results;
-      this.nextPage = paquetes.next;
-      this.previousPage = paquetes.previous;
-    });
+  cargaDataPaginacion(event:any) {
+    this.paquetes=event;
   }
 
 }

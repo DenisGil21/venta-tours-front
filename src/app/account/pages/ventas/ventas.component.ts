@@ -46,15 +46,8 @@ export class VentasComponent implements OnInit {
     });
   }
 
-  paginacion(paginacion:string){
-    this.cargando = true;
-    this.ventasService.paginacionVentas(paginacion)
-    .subscribe(paquetes => {
-      this.cargando = false;
-      this.ventas = paquetes.results;
-      this.nextPage = paquetes.next;
-      this.previousPage = paquetes.previous;
-    });
+  cargaDataPaginacion(event:any) {
+    this.ventas=event;
   }
 
 }

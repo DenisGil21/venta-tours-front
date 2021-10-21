@@ -64,16 +64,9 @@
                         </tr>
                     </tbody>
                 </table>
-                <nav aria-label="..." *ngIf="txtTermino.value.length === 0">
-                    <ul class="pagination">
-                        <li class="page-item" [ngClass]="{'disabled':!previousPage}">
-                            <button (click)="paginacion(previousPage)" class="page-link" tabindex="-1" aria-disabled="true">Anterior</button>
-                        </li>
-                        <li class="page-item" [ngClass]="{'disabled':!nextPage}">
-                            <button class="page-link" (click)="paginacion(nextPage)">Siguiente</button>
-                        </li>
-                    </ul>
-                </nav>
+                <div *ngIf="txtTermino.value.length === 0">
+                    <app-pagination (mandarData)="cargaDataPaginacion($event)" [nextPage]="nextPage" [previousPage]="previousPage"></app-pagination>
+                </div>
             </div>
         </div>
 

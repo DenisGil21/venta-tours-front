@@ -28,7 +28,7 @@ export class VentaService {
 
   obtenerVentas(filtro?:string){
     const options = filtro ?
-    { headers:new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`), params: new HttpParams().set('username', filtro.toLowerCase()) } : 
+    { headers:new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`), params: new HttpParams().set('username', filtro) } : 
     {headers:new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)};
     return this.http.get(url, options)
     .pipe(
@@ -36,9 +36,4 @@ export class VentaService {
     )
   }
 
-  paginacionVentas(url:string){
-    return this.http.get(url,this.headers).pipe(
-      map((resp:{next:string, previous:string, results:Venta[]}) => resp)
-    );
-  }
 }

@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a routerLink="/account">Cuenta</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Ventas</li>
+        <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
     </ol>
 </nav>
 <div class="row mb-3 animate__animated animate__fadeIn">
@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-body">
 
-                <input type="text" class="form-control" placeholder="Buscar venta por usuario" (keyup)="buscar(txtTermino.value)" #txtTermino>
+                <input type="text" class="form-control" placeholder="Buscar usuario" (keyup)="buscar(txtTermino.value)" #txtTermino>
 
             </div>
         </div>
@@ -32,29 +32,31 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-8">
-                        <h4>Lista de ventas</h4>
+                        <h4>Lista de usuarios</h4>
                     </div>
                 </div>
-                <table class="table table-bordered">
+                <table class="table table-bordered text-center">
                     <thead class="thead-light">
                         <tr>
-                            <th scope="col">Usuario</th>
-                            <th scope="col">Cantidad adultos</th>
-                            <th scope="col">Cantidad niños</th>
-                            <th scope="col">Fecha de reserva</th>
-                            <th scope="col">Fecha de compra</th>
-                            <th scope="col">Total</th>
+                            <th scope="col">Nombre de usuario</th>
+                            <th scope="col">Nombre completo</th>
+                            <th scope="col">Correo electrónico</th>
+                            <th scope="col">Administrador</th>
                             <th scope="col" class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let venta of ventas">
-                            <td>{{venta.user.username}}</td>
-                            <td>{{venta.cantidad_adultos}}</td>
-                            <td>{{venta.cantidad_ninos}}</td>
-                            <td>{{venta.fecha}}</td>
-                            <td>{{venta.created_at}}</td>
-                            <td>{{venta.total}}</td>
+                        <tr *ngFor="let usuario of usuarios">
+                            <td>{{usuario.username}}</td>
+                            <td>
+                                <span *ngIf="usuario.first_name">{{usuario.first_name}} {{usuario.last_name}}</span>
+                                <span *ngIf="!usuario.first_name" class="text-danger">El usuario no ha completado sus datos</span>
+                            </td>
+                            <td>{{usuario.email}}</td>
+                            <td>
+                                <i *ngIf="usuario.is_superuser" class="fas fa-check"></i>
+                                <i *ngIf="!usuario.is_superuser" class="fas fa-times"></i>
+                            </td>
                             <td class="text-center">
                                 asd
                             </td>

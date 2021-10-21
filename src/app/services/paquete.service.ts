@@ -41,11 +41,6 @@ export class PaqueteService {
     return this.http.delete(`${url}/${id}`,this.headers);
   }
 
-  paginacionPaquetes(url:string){
-    return this.http.get(url).pipe(
-      map((resp:{next:string, previous:string, results:Paquete[]}) => resp)
-    );
-  }
 
   guardarPaquete(paquete:any){
     return this.http.post(url,paquete,this.headers).pipe(
