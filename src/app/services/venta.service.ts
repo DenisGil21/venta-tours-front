@@ -23,7 +23,7 @@ export class VentaService {
   }
 
   crearVenta(venta:any){    
-    return this.http.post(url,venta);
+    return this.http.post(url,venta,this.headers);
   }
 
   obtenerVentas(filtro?:string){

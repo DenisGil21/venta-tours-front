@@ -48,9 +48,9 @@ export class UsuarioService {
     return this.http.post(`${base_url}/api/token/refresh`,{
       'refresh':localStorage.getItem('refresh')
     }).pipe(
-      map((resp:any)=>{        
-        const {username, email,first_name,last_name, pk} = resp.user;
-        this.usuario = new Usuario(username,email,first_name,last_name,pk)
+      map((resp:any)=>{                
+        const {username, email, is_superuser, first_name, last_name, pk} = resp.user;
+        this.usuario = new Usuario(username, email, first_name, last_name, pk, is_superuser)
         localStorage.setItem('token', resp.access);
         localStorage.setItem('username',username)
         return true

@@ -4,6 +4,7 @@ export class Usuario {
         public email: string,
         public first_name?:string,
         public last_name?:string,
-        public id?:number
+        public id?:number,
+        public is_superuser?: boolean,
     ){}
 }

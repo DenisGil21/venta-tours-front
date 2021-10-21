@@ -7,9 +7,10 @@ import { environment } from '../../../../environments/environment';
 import { DetalleVenta } from '../../../models/detalle-venta.model';
 import { Paquete } from '../../../interfaces/paquete.interface';
 import { PaqueteService } from '../../../services/paquete.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Usuario } from '../../../models/usuario.model';
+import Swal from 'sweetalert2';
 import {
   StripeCardElementOptions,
   StripeElementsOptions,
@@ -26,6 +27,7 @@ export class VentaComponent implements OnInit {
   public tarjeta=false;
   public estaComprando = true;
   public usuario:Usuario;
+  public loadingCompra = false;
 
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
@@ -61,7 +63,7 @@ export class VentaComponent implements OnInit {
   public payPalConfig?:IPayPalConfig;
 
   constructor(private paqueteService:PaqueteService, private stripeService: StripeService, private activatedRoute:ActivatedRoute,
-    private ventaService:VentaService, private fb:FormBuilder, private usuarioService: UsuarioService) {
+    private ventaService:VentaService, private fb:FormBuilder, private usuarioService: UsuarioService, private router:Router) {
       this.usuario = usuarioService.usuario;
      }
 
@@ -100,9 +102,9 @@ export class VentaComponent implements OnInit {
 
 
   pagar(){    
-    const name = this.formPago.get('nombre').value;
+    this.loadingCompra = true;
       this.stripeService
-        .createToken(this.card.element, { name })
+        .createToken(this.card.element, { 'name':`${this.usuario.first_name} ${this.usuario.last_name}` })
         .subscribe((result) => {
           if (result.token) {
 
@@ -112,18 +114,32 @@ export class VentaComponent implements OnInit {
               stripeToken:result.token.id,
               paquete:this.paquete.id,
               descripcion: this.paquete.nombre,
-              user:this.usuario.id
+              user: this.usuario.id,
+              nombre: `${this.usuario.first_name} ${this.usuario.last_name}`,
+              email: this.usuario.email
             }
 
             this.ventaService.crearVenta(data)
-            .subscribe((result)=>{
+            .subscribe(result=>{
+              this.loadingCompra = false;
               console.log(result);
+              Swal.fire('Completado', 'Se ha reservado el paquete', 'success');  
+              if (this.usuario.is_superuser) {
+                this.router.navigateByUrl('/account/ventas');
+              }else{
+                this.router.navigateByUrl('/account/compras');
+              }
               
+            }, (err) => {
+              Swal.fire('Error', 'Error al reservar el paquete', 'error');  
             });
 
           } else if (result.error) {
             // Error creating the token
+            this.loadingCompra = false;
             console.log(result.error.message);
+            Swal.fire('Error', 'Error al reservar el paquete', 'error');  
+
           }
         });
 
@@ -202,7 +218,14 @@ export class VentaComponent implements OnInit {
           this.ventaService.crearVenta(dataForm)
           .subscribe((result)=>{
             console.log(result);
-            
+            Swal.fire('Completado', 'Se ha reservado el paquete', 'success');  
+              if (this.usuario.is_superuser) {
+                this.router.navigateByUrl('/account/ventas');
+              }else{
+                this.router.navigateByUrl('/account/compras');
+              }
+          }, (err) => {
+            Swal.fire('Error', 'Error al reservar el paquete', 'error');  
           });
         },
         onCancel: (data, actions) => {
@@ -210,10 +233,11 @@ export class VentaComponent implements OnInit {
 
         },
         onError: err => {
-            console.log('OnError', err);
+          console.log('OnError', err);
+          Swal.fire('Error', 'Error al reservar el paquete', 'error');  
         },
         onClick: (data, actions) => {
-            console.log('onClick', data, actions);
+          console.log('onClick', data, actions);
         },
     };
 }
