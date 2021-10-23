@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { VentaService } from '../../../services/venta.service';
 import { Venta } from '../../../interfaces/venta.interface';
 import { Usuario } from '../../../models/usuario.model';
+declare var $:any;
 
 @Component({
   selector: 'app-ventas',
   templateUrl: './ventas.component.html',
   styleUrls: ['./ventas.component.css']
 })
-export class VentasComponent implements OnInit {
+export class VentasComponent implements OnInit, AfterViewChecked {
 
   public cargando = false;
   public ventas:Venta[]=[];
+  public venta:Venta;
   public nextPage:string;
   public previousPage:string;
   public usuario:Usuario
@@ -21,6 +23,10 @@ export class VentasComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarVentas();    
+  }
+
+  ngAfterViewChecked(): void {
+    $('[data-toggle="tooltip"]').tooltip();
   }
 
   buscar(termino:string){
@@ -44,6 +50,10 @@ export class VentasComponent implements OnInit {
       console.log(this.ventas);
       
     });
+  }
+
+  detalleVenta(venta:Venta){
+    this.venta = venta
   }
 
   cargaDataPaginacion(event:any) {

@@ -54,7 +54,7 @@ export class PerfilComponent implements OnInit {
         control.markAllAsTouched();
       });
     }
-    this.usuarioiService.actualizarPerfil(this.usuario.id,this.perfilForm.value)
+    this.usuarioiService.actualizarPerfil(this.usuario.pk,this.perfilForm.value)
     .subscribe(data => {
       Swal.fire('Actualizado', 'Perfil actualizado correctamente', 'success');
     },(err) => {
@@ -80,7 +80,7 @@ export class PerfilComponent implements OnInit {
       ...this.passwordForm.value
     }
     delete data.password2;
-    this.usuarioiService.actualizarPerfil(this.usuario.id,data)
+    this.usuarioiService.actualizarPerfil(this.usuario.pk,data)
     .subscribe(data => {
       console.log(data);
       Swal.fire('Actualizado', 'Contraseña actualizado correctamente', 'success');

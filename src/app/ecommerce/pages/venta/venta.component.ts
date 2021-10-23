@@ -114,7 +114,7 @@ export class VentaComponent implements OnInit {
               stripeToken:result.token.id,
               paquete:this.paquete.id,
               descripcion: this.paquete.nombre,
-              user: this.usuario.id,
+              user: this.usuario.pk,
               nombre: `${this.usuario.first_name} ${this.usuario.last_name}`,
               email: this.usuario.email
             }
@@ -213,7 +213,7 @@ export class VentaComponent implements OnInit {
             ...this.formPago.value,
             total : this.detalleVenta.total,
             paquete:this.paquete.id,
-            user:this.usuario.id
+            user:this.usuario.pk
           }
           this.ventaService.crearVenta(dataForm)
           .subscribe((result)=>{
@@ -234,7 +234,7 @@ export class VentaComponent implements OnInit {
         },
         onError: err => {
           console.log('OnError', err);
-          Swal.fire('Error', 'Error al reservar el paquete', 'error');  
+          Swal.fire('Error', 'Error al cargar método de pago', 'error');  
         },
         onClick: (data, actions) => {
           console.log('onClick', data, actions);

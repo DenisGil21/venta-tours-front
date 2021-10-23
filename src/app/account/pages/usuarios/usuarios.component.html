@@ -58,7 +58,7 @@
                                 <i *ngIf="!usuario.is_superuser" class="fas fa-times"></i>
                             </td>
                             <td class="text-center">
-                                asd
+                                <a class="cursor m-1" (click)="desactivarUsuario(usuario)" data-toggle="tooltip" data-placement="top" title="Desactivar"><i class="fas fa-lock"></i></a>
                             </td>
                         </tr>
                     </tbody>

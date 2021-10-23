@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Usuario } from '../../../models/usuario.model';
+import Swal from 'sweetalert2';
+declare var $:any;
 
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.css']
 })
-export class UsuariosComponent implements OnInit {
+export class UsuariosComponent implements OnInit, AfterViewChecked {
 
   public cargando = false;
 
@@ -19,6 +21,10 @@ export class UsuariosComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarUsuarios();
+  }
+
+  ngAfterViewChecked(): void {
+    $('[data-toggle="tooltip"]').tooltip();
   }
 
   buscar(termino:string){
@@ -43,6 +49,31 @@ export class UsuariosComponent implements OnInit {
       this.nextPage = resp.next;
       this.previousPage = resp.previous;
       this.usuarios = resp.results;
+    })
+  }
+
+  desactivarUsuario(usuario:Usuario){
+    console.log(usuario);
+    
+    Swal.fire({
+      title: '¿Desactivar usuario?',
+      text: `Esta a punto de desactivar al usuario ${usuario.username}`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si, desactivarlo',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.usuarioService.desactivarUsuario(usuario.pk)
+        .subscribe(() => {
+          Swal.fire(
+            'Usuario desactivado',
+            `${usuario.username} fue desactivado correctamente`,
+            'success'
+            );
+            this.cargarUsuarios();
+        });
+      }
     })
   }
 

@@ -1,4 +1,5 @@
-import { User } from './user.interface';
+import { Paquete } from './paquete.interface';
+import { Usuario } from '../models/usuario.model';
 export interface Venta {
     id: number;
     cantidad_adultos: number;
@@ -7,6 +8,6 @@ export interface Venta {
     total: number;
     fecha: string;
     created_at: Date;
-    user: User;
-    paquete: number;
+    user: Usuario;
+    paquete: Paquete;
 }

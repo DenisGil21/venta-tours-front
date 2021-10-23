@@ -88,4 +88,8 @@ export class UsuarioService {
     )
   }
 
+  desactivarUsuario(id:number){
+    return this.http.delete(`${url}/${id}`,this.headers)
+  }
+
 }
