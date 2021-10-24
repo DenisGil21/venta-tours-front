@@ -9,6 +9,7 @@ import { VentasComponent } from './pages/ventas/ventas.component';
 import { PanelComponent } from './pages/panel/panel.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
+import { ComprasComponent } from './pages/compras/compras.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
     component: AccountComponent,
     children:[
       { path: '', component: PanelComponent },
+      { path: 'compras', component: ComprasComponent },
       { path: 'empresas', component: EmpresasComponent },
       { path: 'galeria/paquete/:id', component:GaleriasComponent},
       { path: 'paquetes', component: AdminPaquetesComponent },

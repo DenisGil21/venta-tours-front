@@ -43,8 +43,16 @@ export class RegistroComponent implements OnInit {
     .subscribe(resp => {
       this.cargando = false;
       this.router.navigateByUrl('/account');
-    },(err)=>{      
-      Swal.fire('Error', JSON.stringify(err.error), 'error');
+    },(err)=>{
+      console.log(err);
+      this.cargando = false;
+      let error:any;
+      if (err.error.email) {
+        [error] = err.error.email
+      }else if(err.error.username){
+        [error] = err.error.username
+      } 
+      Swal.fire('Error', error, 'error');
     });
     
     

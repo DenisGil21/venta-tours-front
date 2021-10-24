@@ -1,0 +1,106 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/account">Cuenta</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Ventas</li>
+    </ol>
+</nav>
+<div class="row mb-3 animate__animated animate__fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <input type="text" class="form-control" placeholder="Buscar venta por usuario" (keyup)="buscar(txtTermino.value)" #txtTermino>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row animate fadeIn fast mt-4" *ngIf="cargando">
+    <div class="col-12">
+        <div class=" alert alert-info text-center" role="alert">
+            <h4 class="alert-heading">Cargando</h4>
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div>
+<div class="row animate__animated animate__fadeIn" *ngIf="!cargando">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-8">
+                        <h4>Lista de ventas</h4>
+                    </div>
+                </div>
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Paquete turístico</th>
+                            <th scope="col">Fecha de compra</th>
+                            <th scope="col">Total</th>
+                            <th scope="col" class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let venta of ventas">
+                            <td>{{venta.paquete.nombre}}</td>
+                            <td>{{venta.created_at}}</td>
+                            <td>${{venta.total}}</td>
+                            <td class="text-center">
+                                <a class="cursor m-1" data-toggle="modal" data-target="#detalleVenta" (click)="detalleVenta(venta)"><i class="fas fa-eye" data-toggle="tooltip" data-placement="top" title="Ver detalle"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="txtTermino.value.length === 0">
+                    <app-pagination (mandarData)="cargaDataPaginacion($event)" [nextPage]="nextPage" [previousPage]="previousPage"></app-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="detalleVenta" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-info-circle"></i> Detalle de la venta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="venta" class="row">
+                    <div class="col-lg-6">
+                        <b>Paquete turistico:</b>
+                        <p>{{venta.paquete.nombre}}</p>
+                        <b>Precio adulto:</b>
+                        <p>${{venta.paquete.precio_adulto}}</p>
+                        <b>Precio niño:</b>
+                        <p>${{venta.paquete.precio_nino}}</p>
+                        <b>Precio total:</b>
+                        <p>${{venta.total}}</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <b>Usuario:</b>
+                        <p>{{venta.user.first_name}} {{venta.user.last_name}}</p>
+                        <b>Cantidad adulto:</b>
+                        <p>{{venta.cantidad_adultos}}</p>
+                        <b>Cantidad niño:</b>
+                        <p>{{venta.cantidad_ninos}}</p>
+                        <b>Fecha reserva:</b>
+                        <p>{{venta.fecha}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times-circle"></i> Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

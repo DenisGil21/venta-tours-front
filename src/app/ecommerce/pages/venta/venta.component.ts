@@ -116,7 +116,9 @@ export class VentaComponent implements OnInit {
               descripcion: this.paquete.nombre,
               user: this.usuario.pk,
               nombre: `${this.usuario.first_name} ${this.usuario.last_name}`,
-              email: this.usuario.email
+              email: this.usuario.email,
+              status:1,
+              metodo_pago:1,
             }
 
             this.ventaService.crearVenta(data)
@@ -213,7 +215,9 @@ export class VentaComponent implements OnInit {
             ...this.formPago.value,
             total : this.detalleVenta.total,
             paquete:this.paquete.id,
-            user:this.usuario.pk
+            user:this.usuario.pk,
+            status:1,
+            metodo_pago:1,
           }
           this.ventaService.crearVenta(dataForm)
           .subscribe((result)=>{

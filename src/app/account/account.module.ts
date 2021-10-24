@@ -12,6 +12,7 @@ import { AccountRoutingModule } from './account-routing.module';
 import { PanelComponent } from './pages/panel/panel.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
+import { ComprasComponent } from './pages/compras/compras.component';
 
 
 
@@ -27,6 +28,7 @@ import { UsuariosComponent } from './pages/usuarios/usuarios.component';
     PanelComponent,
     PerfilComponent,
     UsuariosComponent,
+    ComprasComponent,
   ],
   imports: [
     CommonModule,

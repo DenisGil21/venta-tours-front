@@ -6,6 +6,7 @@ import { Venta } from '../interfaces/venta.interface';
 
 const base_url = environment.base_url;
 const url = `${base_url}/api/ventas`;
+const urlUser = `${base_url}/api/usuarios`;
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,16 @@ export class VentaService {
     { headers:new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`), params: new HttpParams().set('username', filtro) } : 
     {headers:new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)};
     return this.http.get(url, options)
+    .pipe(
+      map((resp:{next:string,previous:string, results:Venta[]}) => resp)
+    )
+  }
+
+  obtenerVentasByUsuario(id:number,filtro?:string){
+    const options = filtro ?
+    { headers:new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`), params: new HttpParams().set('username', filtro) } : 
+    {headers:new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)};
+    return this.http.get(`${urlUser}/${id}/ventas`, options)
     .pipe(
       map((resp:{next:string,previous:string, results:Venta[]}) => resp)
     )

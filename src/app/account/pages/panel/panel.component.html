@@ -2,7 +2,7 @@
     <h3 class="text-center">Panel de administración - {{usuario.username | uppercase}}</h3>
     <hr>
     <div class="row">
-        <div class="col-md-6 col-lg-4 mb-3">
+        <div class="col-md-6 col-lg-4 mb-3" *ngIf="usuario.is_superuser">
             <div class="card list-group-item-action cursor h-100">
                 <div class="card-body" (click)="navegarModulo('empresas')">
                     <div class="row">
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-lg-4 mb-3">
+        <div class="col-md-6 col-lg-4 mb-3" *ngIf="usuario.is_superuser">
             <div class="card list-group-item-action cursor h-100">
                 <div class="card-body" (click)="navegarModulo('paquetes')">
                     <div class="row">
@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-lg-4 mb-3">
+        <div class="col-md-6 col-lg-4 mb-3" *ngIf="usuario.is_superuser">
             <div class="card list-group-item-action cursor h-100">
                 <div class="card-body" (click)="navegarModulo('ventas')">
                     <div class="row">
@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-lg-4 mb-3">
+        <div class="col-md-6 col-lg-4 mb-3" *ngIf="usuario.is_superuser">
             <div class="card list-group-item-action cursor h-100">
                 <div class="card-body" (click)="navegarModulo('usuarios')">
                     <div class="row">
@@ -57,6 +57,21 @@
                         <div class="col-sm-9 col-md-6 col-lg-8">
                             <h5>Usuarios</h5>
                             <p class="descripcion">Administrar usuarios del sistema</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-3" *ngIf="!usuario.is_superuser">
+            <div class="card list-group-item-action cursor h-100">
+                <div class="card-body" (click)="navegarModulo('compras')">
+                    <div class="row">
+                        <div class="col-sm-3 col-md-6 col-lg-4">
+                            <img src="../../../assets/icons/ventas.png" style="max-width: 100%;" alt="">
+                        </div>
+                        <div class="col-sm-9 col-md-6 col-lg-8">
+                            <h5>Compras</h5>
+                            <p class="descripcion">Ver información de las compras realizadas</p>
                         </div>
                     </div>
                 </div>
