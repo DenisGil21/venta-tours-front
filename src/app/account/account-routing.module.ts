@@ -10,6 +10,7 @@ import { PanelComponent } from './pages/panel/panel.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { ComprasComponent } from './pages/compras/compras.component';
+import { SuperuserGuard } from '../guards/superuser.guard';
 
 
 const routes: Routes = [
@@ -19,13 +20,13 @@ const routes: Routes = [
     children:[
       { path: '', component: PanelComponent },
       { path: 'compras', component: ComprasComponent },
-      { path: 'empresas', component: EmpresasComponent },
-      { path: 'galeria/paquete/:id', component:GaleriasComponent},
-      { path: 'paquetes', component: AdminPaquetesComponent },
-      { path: 'paquete/:id', component: AdminPaqueteComponent },
+      { path: 'empresas', component: EmpresasComponent,canActivate:[SuperuserGuard] },
+      { path: 'galeria/paquete/:id', component:GaleriasComponent,canActivate:[SuperuserGuard]},
+      { path: 'paquetes', component: AdminPaquetesComponent,canActivate:[SuperuserGuard] },
+      { path: 'paquete/:id', component: AdminPaqueteComponent,canActivate:[SuperuserGuard] },
       { path: 'perfil', component: PerfilComponent },
-      { path: 'usuarios', component: UsuariosComponent},
-      { path: 'ventas', component: VentasComponent },
+      { path: 'usuarios', component: UsuariosComponent,canActivate:[SuperuserGuard]},
+      { path: 'ventas', component: VentasComponent,canActivate:[SuperuserGuard] },
     ]
   }
   
