@@ -211,13 +211,16 @@ export class VentaComponent implements OnInit {
         onClientAuthorization: (data) => {
           //aqui hago lo del backend
           console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+          let reembolso_id = data.purchase_units[0].payments.captures[0].id;
+          
           const dataForm = {
             ...this.formPago.value,
             total : this.detalleVenta.total,
             paquete:this.paquete.id,
             user:this.usuario.pk,
             status:1,
-            metodo_pago:1,
+            metodo_pago:2,
+            reembolso_compra: reembolso_id
           }
           this.ventaService.crearVenta(dataForm)
           .subscribe((result)=>{

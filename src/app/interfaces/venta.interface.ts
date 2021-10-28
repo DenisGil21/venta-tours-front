@@ -8,6 +8,9 @@ export interface Venta {
     total: number;
     fecha: string;
     created_at: Date;
+    status: string;
+    metodo_pago:string;
+    reembolso_compra:string;
     user: Usuario;
     paquete: Paquete;
 }

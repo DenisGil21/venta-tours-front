@@ -3,6 +3,7 @@ import { Venta } from '../../../interfaces/venta.interface';
 import { Usuario } from '../../../models/usuario.model';
 import { VentaService } from '../../../services/venta.service';
 import { UsuarioService } from '../../../services/usuario.service';
+import Swal from 'sweetalert2';
 declare var $:any;
 
 @Component({
@@ -52,6 +53,31 @@ export class ComprasComponent implements OnInit {
       console.log(this.ventas);
       
     });
+  }
+
+  cancelarReservacion(venta:Venta){
+    const dateNow = new Date();
+    const dateEntered = new Date(venta.fecha);
+    if (dateNow > dateEntered) {   
+      Swal.fire('Error', 'Ya no puede cancelar la reservación', 'error');         
+      return
+    }
+    Swal.fire({
+      title: '¿Esta seguro que desea cancelar la reservación del paquete?',
+      text: `Se le devolvera el dinero por la reservación del paquete ${venta.paquete.nombre}`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si, cancelar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ventaService.editarVenta(venta.id,2)
+        .subscribe(resp => {
+          this.cargarVentas();
+          Swal.fire('Solicitud enviada', 'Su reembolso sera verificado', 'success');
+        });
+      }
+    });    
   }
 
   detalleVenta(venta:Venta){

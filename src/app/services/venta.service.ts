@@ -47,4 +47,19 @@ export class VentaService {
     )
   }
 
+  editarVenta(id:number,status:number){
+    return this.http.put(`${url}/${id}`,{'status':status},this.headers)
+  }
+
+  reembolsoPaypal(id:string){
+    const basicAuth  = btoa(`${environment.paypal_client}:${environment.paypal_secret}`);
+
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Basic ${basicAuth}`
+    });
+    const urlPaypal = 'https://api-m.sandbox.paypal.com/v2/payments/captures';
+    return this.http.post(`${urlPaypal}/${id}/refund`,{},{headers});
+  }
+
 }

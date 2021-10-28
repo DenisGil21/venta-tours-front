@@ -13,6 +13,7 @@ import { PanelComponent } from './pages/panel/panel.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { ComprasComponent } from './pages/compras/compras.component';
+import { ComponentsModule } from '../components/components.module';
 
 
 
@@ -35,7 +36,8 @@ import { ComprasComponent } from './pages/compras/compras.component';
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
-    AccountRoutingModule
+    AccountRoutingModule,
+    ComponentsModule
   ]
 })
 export class AccountModule { }
