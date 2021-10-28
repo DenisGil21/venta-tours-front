@@ -88,8 +88,12 @@ export class UsuarioService {
     )
   }
 
-  desactivarUsuario(id:number){
-    return this.http.delete(`${url}/${id}`,this.headers)
+  // desactivarUsuario(id:number){
+  //   return this.http.delete(`${url}/${id}`,this.headers)
+  // }
+
+  desactivarUsuario(id:number,active:boolean){
+    return this.http.put(`${url}/${id}`,{'is_active':active},this.headers)
   }
 
 }

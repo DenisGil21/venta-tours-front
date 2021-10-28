@@ -56,19 +56,19 @@ export class UsuariosComponent implements OnInit, AfterViewChecked {
     console.log(usuario);
     
     Swal.fire({
-      title: '¿Desactivar usuario?',
-      text: `Esta a punto de desactivar al usuario ${usuario.username}`,
+      title: `${usuario.is_active?'¿Desactivar':'¿Activar'} usuario?`,
+      text: `Esta a punto de ${usuario.is_active?'desactivar':'activar'} al usuario ${usuario.username}`,
       icon: 'question',
       showCancelButton: true,
-      confirmButtonText: 'Si, desactivarlo',
+      confirmButtonText: `Si, ${usuario.is_active?'desactivarlo':'activarlo'}`,
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.usuarioService.desactivarUsuario(usuario.pk)
+        this.usuarioService.desactivarUsuario(usuario.pk,!usuario.is_active)
         .subscribe(() => {
           Swal.fire(
-            'Usuario desactivado',
-            `${usuario.username} fue desactivado correctamente`,
+            `Usuario ${usuario.is_active?'desactivado':'activado'}`,
+            `${usuario.username} fue ${usuario.is_active?'desactivado':'activado'} correctamente`,
             'success'
             );
             this.cargarUsuarios();

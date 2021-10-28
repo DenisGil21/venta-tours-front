@@ -6,5 +6,6 @@ export class Usuario {
         public last_name?:string,
         public pk?:number,
         public is_superuser?: boolean,
+        public is_active?: boolean,
     ){}
 }
