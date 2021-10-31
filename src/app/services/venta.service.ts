@@ -27,20 +27,37 @@ export class VentaService {
     return this.http.post(url,venta,this.headers);
   }
 
-  obtenerVentas(filtro?:string){
-    const options = filtro ?
-    { headers:new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`), params: new HttpParams().set('username', filtro) } : 
-    {headers:new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)};
+  obtenerVentas(filtro?:string,busqueda?:string){    
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    let params = new HttpParams();
+
+    const options = filtro && busqueda ? 
+    { headers, params: params.set('filtro', filtro).set('username', busqueda) } : filtro ?
+    { headers, params: params.set('filtro', filtro) } : busqueda ?
+    { headers, params: params.set('username', busqueda) } :
+    { headers};
     return this.http.get(url, options)
     .pipe(
       map((resp:{next:string,previous:string, results:Venta[]}) => resp)
     )
   }
 
-  obtenerVentasByUsuario(id:number,filtro?:string){
-    const options = filtro ?
-    { headers:new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`), params: new HttpParams().set('username', filtro) } : 
-    {headers:new HttpHeaders().set('Authorization',`Bearer ${localStorage.getItem('token')}`)};
+  obtenerVentasByUsuario(id:number,filtro?:string,busqueda?:string){
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    let params = new HttpParams();
+
+    const options = filtro && busqueda ? 
+    { headers, params: params.set('filtro', filtro).set('paquete', busqueda) } : filtro ?
+    { headers, params: params.set('filtro', filtro) } : busqueda ?
+    { headers, params: params.set('paquete', busqueda) } :
+    { headers};
+    
     return this.http.get(`${urlUser}/${id}/ventas`, options)
     .pipe(
       map((resp:{next:string,previous:string, results:Venta[]}) => resp)

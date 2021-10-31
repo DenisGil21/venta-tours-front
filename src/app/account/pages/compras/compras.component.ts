@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Venta } from '../../../interfaces/venta.interface';
 import { Usuario } from '../../../models/usuario.model';
 import { VentaService } from '../../../services/venta.service';
 import { UsuarioService } from '../../../services/usuario.service';
 import Swal from 'sweetalert2';
+import { Router, ActivatedRoute } from '@angular/router';
 declare var $:any;
 
 @Component({
@@ -19,37 +20,29 @@ export class ComprasComponent implements OnInit {
   public nextPage:string;
   public previousPage:string;
   public usuario:Usuario;
+  public busqueda = '';
+  public filtro = '';
 
-  constructor(private ventaService:VentaService, private usuarioService: UsuarioService) {
+  constructor(private ventaService:VentaService, private usuarioService: UsuarioService, private router:Router, private activatedRoute: ActivatedRoute) {
     this.usuario = usuarioService.usuario;
    }
 
   ngOnInit(): void {
-    this.cargarVentas()
+    this.activatedRoute.queryParams.subscribe(params => {      
+      this.cargarVentas(params?.filtro,params.busqueda)
+    });
   }
 
   ngAfterViewChecked(): void {
     $('[data-toggle="tooltip"]').tooltip();
   }
 
-  buscar(termino:string){
-    if(termino.length === 0){
-      this.cargarVentas();      
-      return;
-    }
-    this.cargando = true;
-    this.ventaService.obtenerVentasByUsuario(this.usuario.pk,termino)
+  cargarVentas(filtro?:string, busqueda?:string){
+    this.ventaService.obtenerVentasByUsuario(this.usuario.pk,filtro,busqueda)
     .subscribe(ventas => {
-      
-      this.cargando = false;
       this.ventas = ventas.results;
-    });
-  }
-
-  cargarVentas(){
-    this.ventaService.obtenerVentasByUsuario(this.usuario.pk)
-    .subscribe(ventas => {
-      this.ventas = ventas.results
+      this.previousPage = ventas.previous;
+      this.nextPage = ventas.next;      
       console.log(this.ventas);
       
     });

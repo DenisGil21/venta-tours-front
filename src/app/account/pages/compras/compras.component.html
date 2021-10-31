@@ -5,14 +5,11 @@
     </ol>
 </nav>
 <div class="row mb-3 animate__animated animate__fadeIn">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-
-                <input type="text" class="form-control" placeholder="Buscar venta por usuario" (keyup)="buscar(txtTermino.value)" #txtTermino>
-
-            </div>
-        </div>
+    <div class="col-lg-10">
+        <app-buscador (mandarBusqueda)="busqueda=$event"></app-buscador>
+    </div>
+    <div class="col-lg-2">
+        <app-filtro-ventas (mandarFiltro)="filtro=$event"></app-filtro-ventas>
     </div>
 </div>
 <div class="row animate fadeIn fast mt-4" *ngIf="cargando">
@@ -63,7 +60,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div *ngIf="txtTermino.value.length === 0">
+                <div *ngIf="busqueda.length === 0 && !filtro">
                     <app-pagination (mandarData)="cargaDataPaginacion($event)" [nextPage]="nextPage" [previousPage]="previousPage"></app-pagination>
                 </div>
             </div>

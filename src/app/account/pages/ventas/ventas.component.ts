@@ -1,8 +1,9 @@
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { VentaService } from '../../../services/venta.service';
 import { Venta } from '../../../interfaces/venta.interface';
 import { Usuario } from '../../../models/usuario.model';
 import Swal from 'sweetalert2';
+import { Router, ActivatedRoute } from '@angular/router';
 declare var $:any;
 
 @Component({
@@ -10,42 +11,54 @@ declare var $:any;
   templateUrl: './ventas.component.html',
   styleUrls: ['./ventas.component.css']
 })
-export class VentasComponent implements OnInit, AfterViewChecked {
+export class VentasComponent implements OnInit, AfterViewChecked, AfterViewInit {
 
   public cargando = false;
   public ventas:Venta[]=[];
   public venta:Venta;
   public nextPage:string;
   public previousPage:string;
-  public usuario:Usuario
+  public usuario:Usuario;
+  @ViewChild('txtTermino') busquedaValue: ElementRef<HTMLInputElement>;
+  @ViewChild('asFiltro') filtroValue: ElementRef<HTMLSelectElement>;
 
-  constructor(private ventaService:VentaService) {
+  constructor(private ventaService:VentaService, private router:Router, private activatedRoute:ActivatedRoute, private cdRef:ChangeDetectorRef) {
   }
 
-  ngOnInit(): void {
-    this.cargarVentas();    
+  ngOnInit(): void {    
+    this.activatedRoute.queryParams.subscribe(params => {      
+      this.cargarVentas(params?.filtro,params.busqueda)
+    });
+
   }
 
   ngAfterViewChecked(): void {
     $('[data-toggle="tooltip"]').tooltip();
+    
   }
 
-  buscar(termino:string){
-    if(termino.length === 0){
-      this.cargarVentas();      
+  ngAfterViewInit(): void {    
+    this.busquedaValue.nativeElement.value = this.activatedRoute.snapshot.queryParamMap.get('busqueda');
+    const filtroParams = this.activatedRoute.snapshot.queryParamMap.get('filtro');
+    if(filtroParams) {
+      this.filtroValue.nativeElement.value = this.activatedRoute.snapshot.queryParamMap.get('filtro');
+    }
+    this.cdRef.detectChanges();
+    
+  }
+
+  // Se realizar la busqueda verificando si existe el queryParams de filtro para combinarlos
+  buscar(){
+    let valor = this.busquedaValue.nativeElement.value;
+    if(valor.length === 0){
+      this.router.navigate(['/account/ventas'], {queryParams:{busqueda:null},queryParamsHandling: 'merge'});
       return;
     }
-    this.cargando = true;
-    this.ventaService.obtenerVentas(termino)
-    .subscribe(ventas => {
-      
-      this.cargando = false;
-      this.ventas = ventas.results;
-    });
+    this.router.navigate(['/account/ventas'], {queryParams:{busqueda:valor},queryParamsHandling: 'merge'});
   }
 
-  cargarVentas(){
-    this.ventaService.obtenerVentas()
+  cargarVentas(filtro?:string, busqueda?:string){
+    this.ventaService.obtenerVentas(filtro, busqueda)
     .subscribe(ventas => {
       this.ventas = ventas.results;
       this.previousPage = ventas.previous;
@@ -95,6 +108,18 @@ export class VentasComponent implements OnInit, AfterViewChecked {
         Swal.fire('Error', 'Hubo un error al aprobar el reembolso', 'error');
       });
     }
+  }
+
+  // Se realiza el filtro verificando si existe el queryParams de busqueda para convinarlos
+  filtrar(){
+    // const filtro = (event.target as HTMLInputElement).value;
+    let filtro = this.filtroValue.nativeElement.value;
+    
+    if (!filtro) {
+      this.router.navigate([], {relativeTo: this.activatedRoute, queryParams:{filtro:null}, queryParamsHandling: 'merge'});
+      return
+    }
+    this.router.navigate([], { relativeTo: this.activatedRoute, queryParams:{filtro}, queryParamsHandling: 'merge'});
   }
 
   cargaDataPaginacion(event:any) {
