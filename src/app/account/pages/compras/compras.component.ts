@@ -20,8 +20,6 @@ export class ComprasComponent implements OnInit {
   public nextPage:string;
   public previousPage:string;
   public usuario:Usuario;
-  public busqueda = '';
-  public filtro = '';
 
   constructor(private ventaService:VentaService, private usuarioService: UsuarioService, private router:Router, private activatedRoute: ActivatedRoute) {
     this.usuario = usuarioService.usuario;

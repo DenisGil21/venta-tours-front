@@ -6,13 +6,8 @@
 </nav>
 <div class="row mb-3 animate__animated animate__fadeIn">
     <div class="col-12">
-        <div class="card">
-            <div class="card-body">
+        <app-buscador [placeholder]="'Buscar paquete'"></app-buscador>
 
-                <input type="text" class="form-control" placeholder="Buscar paquete" (keyup)="buscar(txtTermino.value)" #txtTermino>
-
-            </div>
-        </div>
     </div>
 </div>
 <div class="row mt-4" *ngIf="cargando">
@@ -64,7 +59,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div *ngIf="txtTermino.value.length === 0">
+                <div>
                     <app-pagination (mandarData)="cargaDataPaginacion($event)" [nextPage]="nextPage" [previousPage]="previousPage"></app-pagination>
                 </div>
             </div>

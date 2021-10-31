@@ -6,10 +6,10 @@
 </nav>
 <div class="row mb-3 animate__animated animate__fadeIn">
     <div class="col-lg-10">
-        <app-buscador (mandarBusqueda)="busqueda=$event"></app-buscador>
+        <app-buscador [placeholder]="'Buscar por nombre de paquete'"></app-buscador>
     </div>
     <div class="col-lg-2">
-        <app-filtro-ventas (mandarFiltro)="filtro=$event"></app-filtro-ventas>
+        <app-filtro-ventas></app-filtro-ventas>
     </div>
 </div>
 <div class="row animate fadeIn fast mt-4" *ngIf="cargando">
@@ -60,7 +60,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div *ngIf="busqueda.length === 0 && !filtro">
+                <div>
                     <app-pagination (mandarData)="cargaDataPaginacion($event)" [nextPage]="nextPage" [previousPage]="previousPage"></app-pagination>
                 </div>
             </div>

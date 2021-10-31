@@ -6,13 +6,8 @@
 </nav>
 <div class="row mb-3 animate__animated animate__fadeIn">
     <div class="col-12">
-        <div class="card">
-            <div class="card-body">
+        <app-buscador [placeholder]="'Buscar empresa'"></app-buscador>
 
-                <input type="text" class="form-control" placeholder="Buscar empresa" (keyup)="buscar(txtTermino.value)" #txtTermino>
-
-            </div>
-        </div>
     </div>
 </div>
 <div class="row animate fadeIn fast mt-4" *ngIf="cargando">

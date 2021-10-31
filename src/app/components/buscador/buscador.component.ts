@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef, AfterViewInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef, AfterViewInit, EventEmitter, Output, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class BuscadorComponent implements OnInit, AfterViewInit {
 
-  @Output() mandarBusqueda = new EventEmitter();
+  @Input() placeholder:string;
 
   @ViewChild('txtTermino') busquedaValue:ElementRef<HTMLInputElement>;
 
@@ -25,7 +25,6 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
 
   buscar(){
     const termino = this.busquedaValue.nativeElement.value;
-    this.mandarBusqueda.emit(termino);
     if(termino.length === 0){
       this.router.navigate([], {queryParams:{busqueda:null},queryParamsHandling: 'merge'});
       return;

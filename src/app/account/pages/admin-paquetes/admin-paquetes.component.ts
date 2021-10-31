@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewChecked, OnDestroy } from '@angular/core';
 import { PaqueteService } from '../../../services/paquete.service';
 import { Paquete } from '../../../interfaces/paquete.interface';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 declare var $:any;
 
 @Component({
@@ -18,10 +18,12 @@ export class AdminPaquetesComponent implements OnInit, AfterViewChecked {
   public nextPage:string;
   public previousPage:string;
 
-  constructor(private paqueteService: PaqueteService, private router:Router) { }
+  constructor(private paqueteService: PaqueteService, private router:Router, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.cargarPaquetes();
+    this.activatedRoute.queryParams.subscribe(params => {      
+      this.cargarPaquetes(params.busqueda)
+    });
   }
 
   ngAfterViewChecked(): void {
@@ -38,9 +40,9 @@ export class AdminPaquetesComponent implements OnInit, AfterViewChecked {
     this.router.navigateByUrl(`/account/galeria/paquete/${id}`);
   }
 
-  cargarPaquetes(){
+  cargarPaquetes(busqueda?:string){
     this.cargando = true;
-    this.paqueteService.cargarPaquetes()
+    this.paqueteService.cargarPaquetes(busqueda)
     .subscribe((paquetes) => {
       this.paquetes = paquetes.results;
       this.nextPage = paquetes.next;

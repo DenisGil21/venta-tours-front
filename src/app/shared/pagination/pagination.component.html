@@ -1,10 +1,10 @@
 <nav aria-label="...">
     <ul class="pagination">
-        <li class="page-item" [ngClass]="{'disabled':!previousPage}">
-            <button (click)="cambiarPagina(previousPage)" class="page-link" tabindex="-1" aria-disabled="true">Anterior</button>
+        <li class="page-item" [ngClass]="{'disabled':!previous}">
+            <button (click)="cambiarPagina(previous)" class="page-link" tabindex="-1" aria-disabled="true">Anterior</button>
         </li>
-        <li class="page-item" [ngClass]="{'disabled':!nextPage}">
-            <button class="page-link" (click)="cambiarPagina(nextPage)">Siguiente</button>
+        <li class="page-item" [ngClass]="{'disabled':!next}">
+            <button class="page-link" (click)="cambiarPagina(next)">Siguiente</button>
         </li>
     </ul>
 </nav>

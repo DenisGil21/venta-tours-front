@@ -65,7 +65,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div *ngIf="txtTermino.value.length === 0 && !asFiltro.value">
+                <div>
                     <app-pagination (mandarData)="cargaDataPaginacion($event)" [nextPage]="nextPage" [previousPage]="previousPage"></app-pagination>
                 </div>
             </div>

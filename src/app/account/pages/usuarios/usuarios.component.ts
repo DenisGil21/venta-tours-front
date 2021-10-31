@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Usuario } from '../../../models/usuario.model';
 import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
 declare var $:any;
 
 @Component({
@@ -17,33 +18,22 @@ export class UsuariosComponent implements OnInit, AfterViewChecked {
   public nextPage:string;
   public previousPage:string;
 
-  constructor(private usuarioService: UsuarioService) { }
+  constructor(private usuarioService: UsuarioService, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.cargarUsuarios();
+    this.activatedRoute.queryParams.subscribe(params => {      
+      this.cargarUsuarios(params.busqueda)
+    });
   }
 
   ngAfterViewChecked(): void {
     $('[data-toggle="tooltip"]').tooltip();
   }
 
-  buscar(termino:string){
-    if(termino.length === 0){
-      this.cargarUsuarios();      
-      return;
-    }
-    this.cargando = true;
-    this.usuarioService.obtenerUsusarios(termino)
-    .subscribe(usuarios => {
-      
-      this.cargando = false;
-      this.usuarios = usuarios.results;
-    });
-  }
 
-  cargarUsuarios(){
+  cargarUsuarios(busqueda?:string){
     this.cargando = true;
-    this.usuarioService.obtenerUsusarios()
+    this.usuarioService.obtenerUsusarios(busqueda)
     .subscribe(resp => {
       this.cargando = false;
       this.nextPage = resp.next;

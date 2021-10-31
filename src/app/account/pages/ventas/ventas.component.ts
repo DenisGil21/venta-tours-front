@@ -60,6 +60,8 @@ export class VentasComponent implements OnInit, AfterViewChecked, AfterViewInit 
   cargarVentas(filtro?:string, busqueda?:string){
     this.ventaService.obtenerVentas(filtro, busqueda)
     .subscribe(ventas => {
+      console.log(ventas);
+      
       this.ventas = ventas.results;
       this.previousPage = ventas.previous;
       this.nextPage = ventas.next;      

@@ -1,5 +1,5 @@
 <div class="card">
     <div class="card-body">
-        <input type="text" class="form-control" placeholder="Buscar venta por usuario" (keyup)="buscar()" #txtTermino>
+        <input type="text" class="form-control" [placeholder]="placeholder" (keyup.enter)="buscar()" #txtTermino>
     </div>
 </div>

@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, AfterViewChecked } from '@angular/cor
 import { EmpresaService } from '../../../services/empresa.service';
 import { Empresa } from '../../../interfaces/empresa.interface';
 import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
 declare var $:any;
 @Component({
   selector: 'app-empresas',
@@ -13,19 +14,21 @@ export class EmpresasComponent implements OnInit,AfterViewChecked {
   public empresas:Empresa[];
   public cargando:boolean = true;
 
-  constructor(private empresaService:EmpresaService) { }
+  constructor(private empresaService:EmpresaService, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.cargarEmpresas();
+    this.activatedRoute.queryParams.subscribe(params => {      
+      this.cargarEmpresas(params.busqueda)
+    });
   }
 
   ngAfterViewChecked(): void {
     $('[data-toggle="tooltip"]').tooltip({'placement': 'top'});
   }
 
-  cargarEmpresas(){
+  cargarEmpresas(busqueda?:string){
     this.cargando = true
-    this.empresaService.cargarEmpresas()
+    this.empresaService.cargarEmpresas(busqueda)
     .subscribe(empresas => {
       this.cargando = false;
       this.empresas = empresas
