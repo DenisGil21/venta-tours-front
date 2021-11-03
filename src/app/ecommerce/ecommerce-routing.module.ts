@@ -23,10 +23,10 @@ const routes:Routes=[
         path:'paquete/:id',
         component:PaqueteComponent
       },
-      {
-        path:'paquetes/:termino',
-        component:BusquedaComponent
-      },
+      // {
+      //   path:'paquetes/:termino',
+      //   component:BusquedaComponent
+      // },
       {
         path:'about',
         component:AboutComponent

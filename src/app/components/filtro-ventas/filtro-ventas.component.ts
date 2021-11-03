@@ -18,6 +18,7 @@ export class FiltroVentasComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
   }
 
+  // Es como el document.ready para detectar si hay un filtro y asignarselo al elemento html
   ngAfterViewInit(): void {
     const filtroParams = this.activatedRoute.snapshot.queryParamMap.get('filtro');
     if(filtroParams) {

@@ -1,0 +1,15 @@
+<div class="card h-100">
+    <img class="card-img-top" [src]="paquete.portada" alt="Card image cap">
+    <div class="card-body">
+        <h3 class="card-title">{{ paquete.nombre }}</h3>
+        <p><i class="fas fa-building"></i>&nbsp; <b>Empresa:</b> {{ paquete.empresa.nombre }}</p>
+        <p>
+            <i class="fas fa-shopping-cart"></i>&nbsp; <b>Precios:</b>
+            <span class="badge badge-info m-2"><i class="fas fa-child"></i> Niño: ${{paquete.precio_nino}}</span>
+            <span class="badge badge-info m-2"><i class="fas fa-male"></i> Adulto: ${{paquete.precio_adulto}}</span>
+        </p>
+    </div>
+    <div class="card-footer">
+        <a class="btn btn-primary btn-block" [routerLink]="['/paquete',paquete.id]" [state]="{tracingId: 123}"><span class="btn-reserva"><i class="fas fa-info-circle"></i> Ver más información</span></a>
+    </div>
+</div>

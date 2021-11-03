@@ -11,6 +11,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   @Input() nextPage:string;
   @Input() previousPage:string;
   @Output() mandarData = new EventEmitter();
+  @Input() urlPrivate:boolean;
   public next:string;
   public previous:string;
 
@@ -27,7 +28,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
   
   cambiarPagina(url:string){    
-    this.paginacionService.paginacionData(url)
+    this.paginacionService.paginacionData(url,this.urlPrivate)
     .subscribe(data => {
       this.data = data.results;
       this.next = data.next;

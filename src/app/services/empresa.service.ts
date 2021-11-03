@@ -32,11 +32,12 @@ export class EmpresaService {
     );
   }
 
-  cargarEmpresaPaquetes(id:number){
-    return this.http.get(`${url}/${id}/paquetes`).pipe(
-      map((resp:Paquete[])=> resp)
-    );
-  }
+  //No esta en uso
+  // cargarEmpresaPaquetes(id:number){
+  //   return this.http.get(`${url}/${id}/paquetes`).pipe(
+  //     map((resp:Paquete[])=> resp)
+  //   );
+  // }
 
   crearEmpresa(nombre:string){
     return this.http.post(url,{nombre}, this.headers);

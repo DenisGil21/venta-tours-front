@@ -5,42 +5,48 @@ import { PaqueteService } from '../../../services/paquete.service';
 import { Paquete } from '../../../interfaces/paquete.interface';
 import { EmpresaService } from '../../../services/empresa.service';
 import { Empresa } from '../../../interfaces/empresa.interface';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-paquetes',
   templateUrl: './paquetes.component.html',
   styleUrls: ['./paquetes.component.css']
 })
-export class PaquetesComponent implements OnInit, OnChanges {
+export class PaquetesComponent implements OnInit {
   
-  @Input() busqueda:string;
-
   public cargando:boolean;
   public paquetes:Paquete[]=[];
   public empresas:Empresa[]=[];
   public empresaFiltro:string;
+  public previousPage:string;
+  public nextPage:string;
 
-  constructor(private paqueteService:PaqueteService, private empresaService:EmpresaService) { }
+  constructor(private paqueteService:PaqueteService, private empresaService:EmpresaService, private activatedRoute: ActivatedRoute, private router:Router) { }
 
   ngOnInit(): void {
+    // este es para el efecto de scroll
     AOS.init();
-    this.cargarPaquetes()
-    this.cargarEmpresas()
+    this.activatedRoute.queryParams.subscribe(params => {  
+      this.empresaFiltro = params.filtro;    
+      this.cargarPaquetes(params.paquete,params.filtro)
+    });
+    this.cargarEmpresas();
     
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.cargarPaquetes()
-  }
+  // Cargar los paquetes de acuerdo a la busqueda
+  // ngOnChanges(): void {
+  //   this.cargarPaquetes();    
+  // }
 
-  cargarPaquetes(){
+  cargarPaquetes(busqueda?:string, filtro?:string){
     this.cargando = true;
-    this.paqueteService.cargarPaquetes(this.busqueda)
+    this.paqueteService.cargarPaquetes(busqueda, filtro)
     .subscribe((paquetes) => {
       this.cargando = false;
-      this.paquetes=paquetes.results;
-      console.log(this.paquetes);
-
+      this.paquetes = paquetes.results;
+      this.previousPage = paquetes.previous;
+      this.nextPage = paquetes.next;
     });
   }
 
@@ -48,21 +54,19 @@ export class PaquetesComponent implements OnInit, OnChanges {
     this.empresaService.cargarEmpresas()
     .subscribe(empresa => {
       this.empresas = empresa;
-      console.log(empresa);
     });
   }
 
-  filtroEmpresa(id:number,nombre:string){ 
-    this.empresaService.cargarEmpresaPaquetes(id)
-    .subscribe(resp => {
-      this.paquetes = resp;
-      this.empresaFiltro = nombre
-    });
+  filtroEmpresa(nombre:string){ 
+    this.router.navigate(['/home'], {queryParams:{filtro:nombre},queryParamsHandling: 'merge'});
   }
 
-  removeFiltroEmpresa(){
-    this.empresaFiltro = ""
-    this.cargarPaquetes()
+  removerFiltroEmpresa(){
+    this.router.navigate(['/home'], {queryParams:{filtro:null},queryParamsHandling: 'merge'});
+  }
+
+  cargaDataPaginacion(event:any) {
+    this.paquetes=event;
   }
 
 }
