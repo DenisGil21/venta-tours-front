@@ -22,11 +22,21 @@ export class PaqueteService {
     }
   }
 
-  cargarPaquetes(busqueda?:string, filtro?:string){
-    const options = busqueda && filtro ?
-    { params: new HttpParams().set('nombre', busqueda).set('filtro', filtro) } : busqueda ? 
-    { params: new HttpParams().set('nombre', busqueda) }: filtro ? 
-    { params: new HttpParams().set('filtro', filtro) }:{};
+  cargarPaquetes(busqueda?:string, filtro?:string, precio?:string){
+    console.log(precio,'desde service');
+    
+    let params = new HttpParams();
+    if (busqueda) {
+      params = params.set('nombre', busqueda);
+    }
+    if (filtro) {
+      params = params.set('filtro', filtro);
+    }
+    if(precio){
+      params = params.set('precio', precio);
+    }
+    const options = busqueda || filtro || precio ?
+    { params } :{};    
 
     return this.http.get(url,options).pipe(
       map((resp:{next:string, previous:string, results:Paquete[]}) => resp)

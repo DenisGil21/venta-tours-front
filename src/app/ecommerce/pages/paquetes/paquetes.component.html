@@ -23,21 +23,39 @@
 </div>
 <!-- cards de paquetes -->
 <div class="row" *ngIf="!cargando && paquetes.length !== 0">
-    <div class="col-lg-2 col-md-2 col-sm-12">
-        <b><i class="fas fa-filter"></i> FILTRO</b>
-        <div class="mt-2" [ngClass]="{'d-none':!empresaFiltro}">
-            <span class="badge badge-primary">{{empresaFiltro}} <i (click)="removerFiltroEmpresa()" class="fas fa-times-circle" style="cursor: pointer;"></i></span>
-        </div>
-        <div class="row mb-4 mt-3">
-            <div class="col-md-12 col-sm-6">
-                <b><i class="fas fa-building"></i> Empresas</b>
-                <div *ngFor="let empresa of empresas">
-                    <span class="badge badge-info" style="cursor: pointer;" (click)="filtroEmpresa(empresa.nombre)">{{empresa.nombre}}</span>
+    <div class="col-lg-2 col-md-3 col-sm-12 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="title-filtro">
+                    <b><i class="fas fa-filter"></i> FILTROS DE BÚSQUEDA</b>
+                    <div class="mt-2" [ngClass]="{'d-none':!empresaFiltro}">
+                        <span class="badge badge-primary">{{empresaFiltro}} <i (click)="removerFiltroEmpresa()" class="fas fa-times-circle" style="cursor: pointer;"></i></span>
+                    </div>
+                    <div class="mt-2" [ngClass]="{'d-none':!precioFiltro}">
+                        <span class="badge badge-primary text-capitalize">{{precioFiltro}} <i (click)="removerFiltroPrecio()" class="fas fa-times-circle" style="cursor: pointer;"></i></span>
+                    </div>
+                </div>
+                <div class="row mb-4 mt-3">
+                    <div class="col-md-12 col-sm-6 m-1">
+                        <b><i class="fas fa-building"></i> Empresas</b>
+                        <div *ngFor="let empresa of empresas">
+                            <span class="badge badge-info" style="cursor: pointer;" (click)="filtroEmpresa(empresa.nombre)">{{empresa.nombre}}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-6 m-1">
+                        <b><i class="fas fa-dollar-sign"></i> Precios</b>
+                        <div>
+                            <span class="badge badge-info" style="cursor: pointer;" (click)="filtroPrecio(true)"><i class="fas fa-chevron-up"></i> Mayor</span>
+                        </div>
+                        <div>
+                            <span class="badge badge-info" style="cursor: pointer;" (click)="filtroPrecio(false)"><i class="fas fa-chevron-down"></i> Menor</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-10 col-md-10 col-sm-12">
+    <div class="col-lg-10 col-md-9 col-sm-12">
         <div class="row">
             <div *ngFor="let paquete of paquetes" data-aos="fade-up" class="col-lg-4 col-md-6 col-sm-6 mb-4">
                 <app-paquete-card [paquete]="paquete"></app-paquete-card>

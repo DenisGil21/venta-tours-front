@@ -22,7 +22,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fas fa-male"></i></div>
                                     </div>
-                                    <input type="number" (keyup)="calcularTotal($event.target.value);" class="form-control" id="adulto" placeholder="Cantidad" formControlName="cantidad_adultos" [class.is-invalid]="campoNoValido('cantidad_adultos')">
+                                    <input type="number" (change)="calcularTotal($event.target.value);" class="form-control" id="adulto" placeholder="Cantidad" formControlName="cantidad_adultos" [class.is-invalid]="campoNoValido('cantidad_adultos')">
                                 </div>
                                 <small *ngIf="campoNoValido('cantidad_adultos')" class="text-center text-danger">
                                     Debe ser mayor a 1
@@ -34,7 +34,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fas fa-child"></i></div>
                                     </div>
-                                    <input type="number" (keyup)="calcularTotal('',$event.target.value);" class="form-control" id="nino" placeholder="Cantidad" formControlName="cantidad_ninos" [class.is-invalid]="campoNoValido('cantidad_ninos')">
+                                    <input type="number" (change)="calcularTotal('',$event.target.value);" class="form-control" id="nino" placeholder="Cantidad" formControlName="cantidad_ninos" [class.is-invalid]="campoNoValido('cantidad_ninos')">
                                     <small *ngIf="campoNoValido('cantidad_ninos')" class="text-center text-danger">
                                         El campo es obligatorio
                                     </small>
