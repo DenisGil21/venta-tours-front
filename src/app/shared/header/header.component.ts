@@ -2,6 +2,7 @@ import { Component, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/usuario.model';
+// declare var google:any;
 
 @Component({
   selector: 'app-header',
@@ -16,8 +17,13 @@ export class HeaderComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    // this.googleTranslateElementInit();
     
   }
+  // googleTranslateElementInit(){
+  //   // new google.translate.TranslateElement({pageLanguage:'en'}, 'google_translate_element')
+  //   new google.translate.TranslateElement({pageLanguage: 'es', includedLanguages: 'ca,eu,gl,en,fr,it,pt,de,es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true}, 'google_translate_element');
+  // }
 
   existeUsuario():boolean{
     if(localStorage.getItem('username')){
