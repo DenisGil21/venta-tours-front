@@ -208,7 +208,7 @@ export class VentaComponent implements OnInit {
             });
 
         },
-        onClientAuthorization: (data) => {
+        onClientAuthorization: (data:any) => {
           //aqui hago lo del backend
           console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
           let reembolso_id = data.purchase_units[0].payments.captures[0].id;

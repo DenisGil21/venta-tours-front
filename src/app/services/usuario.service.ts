@@ -52,6 +52,7 @@ export class UsuarioService {
         const {username, email, is_superuser, first_name, last_name, pk} = resp.user;
         this.usuario = new Usuario(username, email, first_name, last_name, pk, is_superuser)
         localStorage.setItem('token', resp.access);
+        localStorage.setItem('refresh', resp.refresh)
         localStorage.setItem('username',username)
         return true
       }),
